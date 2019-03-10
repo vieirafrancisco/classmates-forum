@@ -1,6 +1,6 @@
 package com.ufal.classmates_forum.domain;
 
-public class Admin extends User{
+public class Admin extends User {
 
     public Admin (){
         super();

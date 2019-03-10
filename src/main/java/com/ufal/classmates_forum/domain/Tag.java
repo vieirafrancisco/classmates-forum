@@ -1,7 +1,8 @@
 package com.ufal.classmates_forum.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 @Entity
 public class Tag {
@@ -12,12 +13,19 @@ public class Tag {
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY,
-                cascade = {
+            cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
             mappedBy = "tags")
-    private ArrayList<Topic> topics;
+    private List<Topic> topics;
+
+
+    public Tag(){}
+
+    public Tag (String name){
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -35,11 +43,11 @@ public class Tag {
         this.name = name;
     }
 
-    public ArrayList<Topic> getTopics() {
+    public List<Topic> getTopics() {
         return topics;
     }
 
-    public void setTopics(ArrayList<Topic> topics) {
+    public void setTopics(List<Topic> topics) {
         this.topics = topics;
     }
 }

@@ -1,10 +1,10 @@
 package com.ufal.classmates_forum.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 @Entity
 @Inheritance
@@ -16,10 +16,9 @@ public class User {
     private int id;
     private String name;
 
-
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private ArrayList<Post> posts;
+    private List<Post> posts;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -29,9 +28,8 @@ public class User {
     @JoinTable(name = "user_comments",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "post_id")})
-    private ArrayList<Post> comments;
+    private List<Post> comments;
 
-    //Construtor padrão do framework
     public User(){}
 
     public User(String name){
@@ -54,19 +52,19 @@ public class User {
         this.name = name;
     }
 
-    public ArrayList<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(ArrayList<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 
-    public ArrayList<Post> getComments() {
+    public List<Post> getComments() {
         return comments;
     }
 
-    public void setComments(ArrayList<Post> comments) {
+    public void setComments(List<Post> comments) {
         this.comments = comments;
     }
 }

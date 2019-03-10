@@ -3,7 +3,7 @@ package com.ufal.classmates_forum.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -16,13 +16,13 @@ public class Post {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "topic_id")
-    private Topic topic;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "topic_id")
+    private Topic topic;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -30,8 +30,7 @@ public class Post {
                     CascadeType.MERGE
             },
             mappedBy = "comments")
-    private ArrayList<User> userComments;
-
+    private List<User> userComments;
 
     public Post(){}
 
@@ -64,14 +63,6 @@ public class Post {
         this.content = content;
     }
 
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
-
     public User getUser() {
         return user;
     }
@@ -80,11 +71,19 @@ public class Post {
         this.user = user;
     }
 
-    public ArrayList<User> getUserComments() {
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
+    public List<User> getUserComments() {
         return userComments;
     }
 
-    public void setUserComments(ArrayList<User> userComments) {
+    public void setUserComments(List<User> userComments) {
         this.userComments = userComments;
     }
 }
