@@ -37,8 +37,7 @@ public class UserController {
         }
 
         return new ResponseEntity<>(
-                "None user's found!",
-                HttpStatus.NOT_FOUND
+                HttpStatus.NO_CONTENT
         );
 
     }
@@ -86,10 +85,11 @@ public class UserController {
 
         // User exist in repository
         if(repository.existsById(id)){
+            Optional<User> user = repository.findById(id);
             repository.deleteById(id);
 
             return new ResponseEntity<>(
-                String.format("User with id: %d succefuly removed", id),
+                user.get().getId(),
                 HttpStatus.OK
             );
         }
