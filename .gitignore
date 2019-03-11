@@ -3,6 +3,8 @@ diagrama_estado.dia~
 HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+node-modules/
+
 
 ### STS ###
 .apt_generated
