@@ -16,7 +16,7 @@ public class User {
     private int id;
     private String name;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="user_post")
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Post> posts;
 
