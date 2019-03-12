@@ -14,12 +14,12 @@ public class Post {
     private String name;
     private String content;
 
-    @JsonBackReference(value="user_post")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonBackReference(value="topic_post")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "topic_id")
     private Topic topic;

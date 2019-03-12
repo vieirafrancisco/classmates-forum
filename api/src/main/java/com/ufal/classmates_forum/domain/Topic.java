@@ -16,7 +16,7 @@ public class Topic {
 
 
     //One topic to N posts
-    @JsonManagedReference(value="topic_post")
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Post> posts;
 
