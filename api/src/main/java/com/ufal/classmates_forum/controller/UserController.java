@@ -37,14 +37,13 @@ public class UserController {
         }
 
         return new ResponseEntity<>(
-                "None user's found!",
-                HttpStatus.NOT_FOUND
+                HttpStatus.NO_CONTENT
         );
 
     }
 
     @GetMapping(value="/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Integer id){
+    public ResponseEntity<?> getUser(@PathVariable Integer id){
 
         if(repository.existsById(id)){
             Optional<User> user = repository.findById(id);
@@ -57,6 +56,7 @@ public class UserController {
 
         // User not found
         return new ResponseEntity<>(
+            String.format("User with id: %d not found!", id),
             HttpStatus.NOT_FOUND
         );
     }
@@ -86,10 +86,11 @@ public class UserController {
 
         // User exist in repository
         if(repository.existsById(id)){
+            Optional<User> user = repository.findById(id);
             repository.deleteById(id);
 
             return new ResponseEntity<>(
-                String.format("User with id: %d succefuly removed", id),
+                user.get().getId(),
                 HttpStatus.OK
             );
         }
