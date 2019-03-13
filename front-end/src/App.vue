@@ -3,6 +3,7 @@
     <img alt="Vue logo" src="./assets/logo.png">
     <router-link to="/login"> Click for login </router-link>
     <router-link to="/topic"> Click for topic </router-link>
+    <router-link to="/logout"> Click for logout </router-link>
     <router-view></router-view>
   </div>
 </template>
