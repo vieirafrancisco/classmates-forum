@@ -1,27 +1,45 @@
 <template>
-    <form @submit="login">
-        <input type="text" placeholder="Username">
-        <input type="text" placeholder="Password">
-        <input type="submit" v-on:click="login" value="Login">
-    </form>
+    <div>
+        <button  @click="login">Login with Google</button>
+        <div>
+            <img :src=photoUrl alt="">
+            <p>Name: {{name}}</p>
+            <p>Email: {{email}}</p>
+            <p>Token: {{token}}</p>
+
+        </div>
+    </div>
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
     name: "Login",
     data: function() {
         return {
-            username: null, 
-            passwor: null
+            name: null, 
+            email: null,
+            photoUrl: null, 
+            phoneNumber: null,  
+            token: null
         }
     },
     methods: {
-        checkForm: function () {
-            return true;
-        },
-
         login: function () {
-            
+            const provider =  new firebase.auth.GoogleAuthProvider();
+
+            firebase.auth().signInWithPopup(provider).then((result) =>{
+                const user = result.user; 
+                this.name = user.displayName;
+                this.photoUrl = user.photoURL;
+                this.phoneNumber = user.phoneNumber;
+                this.email = user.email;
+                this.token = result.credential.accessToken;                
+
+            }).catch((error) => {
+                alert(error.message); 
+            })
         }
     }
 }

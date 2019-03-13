@@ -5,7 +5,7 @@ export function get() {
 }
 
 export function getAll() {
-    return JSON.stringify(Commentsls
+    return JSON.stringify(Comments);
 }
 
 export function create() {
