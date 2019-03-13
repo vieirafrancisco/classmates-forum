@@ -1,0 +1,38 @@
+{
+    "Topic" : {
+        "get": "",
+        "getAll": "",
+        "create": "",
+        "update": "", 
+        "delete": ""
+    },
+
+    "Post": {
+        "get": "",
+        "getAll": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+    },
+    "Comment": {
+        "get": "",
+        "getAll": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+    },
+    "Tag": {
+        "get": "",
+        "getAll": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+    },
+    "User": {
+        "get": "",
+        "getAll": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+    }
+}

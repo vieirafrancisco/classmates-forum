@@ -2,7 +2,7 @@
     <form @submit="login">
         <input type="text" placeholder="Username">
         <input type="text" placeholder="Password">
-        <input type="submit" value="Login">
+        <input type="submit" v-on:click="login" value="Login">
     </form>
 </template>
 
@@ -21,7 +21,7 @@ export default {
         },
 
         login: function () {
-
+            
         }
     }
 }
