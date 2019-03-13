@@ -2,7 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import routes from './routes.js'
 import VueRouter from 'vue-router';
-import initialize from './firabase.config.js'
+import firebase from  'firebase';
+import {config} from './firebase.config.json';
 
 Vue.use(VueRouter)
 
@@ -11,7 +12,7 @@ const router = new VueRouter({
 })
 
 // initialieze module firebase
-initialize();
+firebase.initializeApp(config);
 
 Vue.config.productionTip = false
 
