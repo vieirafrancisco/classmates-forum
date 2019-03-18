@@ -29,22 +29,22 @@ public class UserLogin {
         return false;
     }
 
-    public void addUseUID(String uid) throws UserAlreadyLoggedException {
+    public void addUserUID(String uid) throws UserAlreadyLoggedException {
         if(!existByUID(uid)){
             loggedUsers.add(uid);
         } else {
             throw new UserAlreadyLoggedException(
-                String.format("User %s already logged!", uid)
+                String.format("User already logged!")
             );
         }
     }
 
-    public void removeUseUID(String uid) throws UserNotLoggedException {
+    public void removeUserUID(String uid) throws UserNotLoggedException {
         if(existByUID(uid)){
             loggedUsers.remove(uid);
         } else{
             throw new UserNotLoggedException(
-                String.format("User not logged! uid: %s", uid)
+                String.format("User not logged!")
             );
         }
     }
