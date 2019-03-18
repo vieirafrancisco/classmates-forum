@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Vector;
 
 @Entity
 @Inheritance
@@ -15,6 +14,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    @Column(unique=true)
+    private String UID;
 
     @JsonManagedReference(value="user_post")
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
@@ -66,5 +68,13 @@ public class User {
 
     public void setComments(List<Post> comments) {
         this.comments = comments;
+    }
+
+    public String getUID(){
+        return this.UID;
+    }
+
+    public void setUID(String UID){
+        this.UID = UID;
     }
 }
