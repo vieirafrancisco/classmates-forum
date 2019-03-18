@@ -2,6 +2,9 @@
 diagrama_sequencia.dia~
 diagrama_estado.dia~
 
+#sql
+data.sql
+
 #vscode
 .vscode
 
