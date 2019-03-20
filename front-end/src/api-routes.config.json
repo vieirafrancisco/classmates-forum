@@ -1,38 +1,13 @@
 {
-    "Topic" : {
-        "get": "",
-        "getAll": "",
-        "create": "",
-        "update": "", 
-        "delete": ""
-    },
+    "addressRoot" : "http://172.19.190.190:8080",
 
-    "Post": {
-        "get": "",
-        "getAll": "",
-        "create": "",
-        "update": "",
-        "delete": ""
-    },
-    "Comment": {
-        "get": "",
-        "getAll": "",
-        "create": "",
-        "update": "",
-        "delete": ""
-    },
-    "Tag": {
-        "get": "",
-        "getAll": "",
-        "create": "",
-        "update": "",
-        "delete": ""
-    },
-    "User": {
-        "get": "",
-        "getAll": "",
-        "create": "",
-        "update": "",
-        "delete": ""
-    }
+    "Topic" : ["/topic", "/topics"],
+
+    "Post": ["/post", "/posts"],
+
+    "Comment": ["/comment", "/comments"],
+    
+    "Tag": ["/tag", "/tags"],
+
+    "User": ["/user", "/users"]
 }

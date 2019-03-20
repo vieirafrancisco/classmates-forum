@@ -7,7 +7,7 @@
 
 
 <script>
-import * as Topic from "../services/TopicService.js";
+import * as Topic from "../services/topic.service.js";
 
 export default {
     name: "Topic",

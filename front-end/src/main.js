@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './views/App.vue'
 import routes from './routes.js'
 import VueRouter from 'vue-router';
 import firebase from  'firebase';
-import userStore from "./userStore.js"
+import userStore from "./store/userStore.js"
 import Vuex from "vuex";
 import {config} from './firebase.config.json';
 

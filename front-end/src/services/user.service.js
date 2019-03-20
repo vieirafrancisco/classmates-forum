@@ -1,7 +1,9 @@
-import { User, Users } from "../ApiMock.json";
+// import { User, Users } from "../ApiMock.json";
+import * as apiRoutes from "../api-routes.config.json"
+
 
 export function get() {
-    return JSON.stringify(User);
+    alert(apiRoutes);
 }
 
 export function getAll() {

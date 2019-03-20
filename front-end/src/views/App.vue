@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <img alt="Vue logo" src="../assets/logo.png">
     <router-link v-if = "logged" to="/logout"> Click for logout </router-link>
     <router-link v-else to="/login"> Click for login </router-link>
     <router-link to="/topic"> Click for topic </router-link>
