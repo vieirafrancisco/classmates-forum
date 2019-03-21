@@ -23,10 +23,9 @@ public class UserLoginController {
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody Login login){
         String uid = login.getUID();
-        int id = login.getId();
         
         try{
-            if(existsByIdAndUID(id, uid)){
+            if(existsByUID(uid)){
                 UserLogin.getInstance().addUserUID(uid);
             } else{
                 return new ResponseEntity<>(
@@ -42,7 +41,6 @@ public class UserLoginController {
         }
         
         return new ResponseEntity<>(
-            userRepository.findById(id),
             HttpStatus.OK
         );
     }
@@ -50,9 +48,8 @@ public class UserLoginController {
     @PostMapping(value = "/logout")
     public ResponseEntity<?> logout(@RequestBody Login login){
         String uid = login.getUID();
-        int id = login.getId();
         
-        if(existsByIdAndUID(id, uid)){
+        if(existsByUID(uid)){
             try{
                 UserLogin.getInstance().removeUserUID(uid);
                 
@@ -73,16 +70,13 @@ public class UserLoginController {
         );
     } 
 
-    private boolean existsByIdAndUID(int id, String uid){
-        if(!userRepository.existsById(id)){
-            return false;
+    private boolean existsByUID(String uid){
+        for(User user: userRepository.findAll()){
+            if(user.getUID().equals(uid)){
+                return true;
+            }
         }
 
-        User user = userRepository.findById(id).get();
-
-        if(user.getUID().equals(uid)){
-            return true;
-        }
         return false;
     }
 
