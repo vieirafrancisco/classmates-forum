@@ -21,6 +21,7 @@ export default {
             this.$store.dispatch("login").then(result => {
                 
             }).catch(error => {
+                alert(error.message);
                 this.erros.push(error.message)
             })
             

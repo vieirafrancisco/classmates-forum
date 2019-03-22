@@ -1,65 +1,102 @@
-import firebase from 'firebase';
+import {signIn} from "../services/firebase.service"
+import {createUser, loginUser, logoutUser} from "../services/user.service"
 import UserStorageService from '.././services/storage.service.js'
 
  const userStore = {
     state: {
-      uid: UserStorageService.getItem("uid"),
-      displayName : UserStorageService.getItem("displayName"),
-      photoUrl : UserStorageService.getItem("photoUrl"),
-      phoneNumber : UserStorageService.getItem("phoneNumber"), 
-      email : UserStorageService.getItem("email"),
-      token : UserStorageService.getItem("token"),
-      logged : !!UserStorageService.getItem("logged"),
-
+      uid: null,
+      displayName : null,
+      photoURL : null,
+      phoneNumber : null, 
+      email : null,
+      token : null,
+      logged : false,
     },
 
     mutations: {
-      setUserProperty(state, [key, value]){
-        alert(value)
-        if(key in state){
-          UserStorageService.setItem(key, value);
-          state[key] = value;
-    
-        }else{
-          throw "key in not in state";
-        }
+      SAVE_USER_SECTION(state, firebaseUser){
+        Object.keys(firebaseUser).forEach(function(key,index) {
+          if(key in state){
+            state[key] = firebaseUser[key]
+            UserStorageService.setItem(key, firebaseUser[key]);
+          }
+        });
       },
-
-      deleteUserState(state){
-        UserStorageService.deleteSection;
-        state = state.de
+      LOAD_USER_SECTION(state){
+        Object.keys(state).forEach(function(key,index) {
+          state[key] = UserStorageService.getItem(key);
+        });
+      },
+      DELETE_USER_SECTION(state){
+        UserStorageService.deleteSection();
+        Object.keys(state).forEach(function(key,index) {
+          state[key] = null;
+        });
+      },
+      SET_USER_TOKEN(state, token){
+        state["token"] = token
+        state["logged"] = true;
       }
     },
 
     actions : {
-        login(context){
-            return new Promise(function(resolve, reject){
-                const provider =  new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(provider).then((result) =>{
-                    const firebaseUser = result.user; 
-                    context.dispatch("saveUserSection", firebaseUser, result.credential.token)
-                    context.commit("setUserProperty", ["logged", true]);
-                    resolve("Resolved");
-                    
-                }).catch((error) => {
-                    reject(error)
-                })
+        login({commit}){
+          return new Promise(function(resolve, reject){
+            signIn().then((result) =>{
+
+              const uid = result.user.uid;
+              loginUser(uid).then((response) => {
+                commit("SAVE_USER_SECTION", result.user);
+                commit("SET_USER_TOKEN", result.credential.token)
+
+                resolve(response);
+              }).catch((error) => {
+                reject(error);
+              }); 
+
+            }).catch((error) => {
+                reject(error);
+            })
+          });
+        },
+
+        logout({commit,state}){
+          return new Promise(function(resolve, reject){
+            if(state.logged){
+              logoutUser(state.uid).then((response) => {
+                commit("DELETE_USER_SECTION");
+                resolve(response);
+              }).catch((error) => {
+                reject(error);
+              })
+            }else{
+              reject("User not logged");
+            }
+          });
+
+        },
+
+        register({commit}){
+          return new Promise(function(resolve, reject) {
+            signIn().then((result) => {
+              const uid = result.user.uid;
+              const displayName = result.user.displayName;
+              const photoURL = result.user.photoURL;
+              const email = result.user.email;
+              createUser(uid, displayName, photoURL, email).then((response) => {
+                commit("SAVE_USER_SECTION", result.user);
+                commit("SET_USER_TOKEN", result.credential.token);
+                
+                resolve(response);
+              }).catch((error) => {
+                reject(error);
+              })
+
+            }).catch((error) => {
+              reject(error);
             });
+          })
         },
-
-        logout(context){
-          context.commit("deleteUser");
-        },
-
-        saveUserSection(context, firebaseUser, token) {
-          context.commit("setUserProperty", ["uid", firebaseUser.uid]);
-          context.commit("setUserProperty", ["displayName", firebaseUser.displayName]);
-          context.commit("setUserProperty", ["photoUrl", firebaseUser.photoUrl]);
-          context.commit("setUserProperty", ["phoneNumber", firebaseUser.phoneNumber]);
-          context.commit("setUserProperty", ["email", firebaseUser.email]);
-          context.commit("setUserProperty", ["email", firebaseUser.email]);
-          context.commit("setUserProperty", ["token", token]);
-      }
     }
   }
 
