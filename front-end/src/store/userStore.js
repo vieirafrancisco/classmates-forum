@@ -1,5 +1,5 @@
-import {signIn} from "../services/firebase.service"
-import {createUser, loginUser, logoutUser} from "../services/user.service"
+import { signInFirebase, logoutFirebase } from "../services/firebase.service"
+import { createUser, loginUser, logoutUser } from "../services/user.service"
 import UserStorageService from '.././services/storage.service.js'
 
  const userStore = {
@@ -42,7 +42,7 @@ import UserStorageService from '.././services/storage.service.js'
     actions : {
         login({commit}){
           return new Promise(function(resolve, reject){
-            signIn().then((result) =>{
+            signInFirebase().then((result) =>{
 
               const uid = result.user.uid;
               loginUser(uid).then((response) => {
@@ -62,13 +62,24 @@ import UserStorageService from '.././services/storage.service.js'
 
         logout({commit,state}){
           return new Promise(function(resolve, reject){
+            
             if(state.logged){
-              logoutUser(state.uid).then((response) => {
-                commit("DELETE_USER_SECTION");
-                resolve(response);
-              }).catch((error) => {
-                reject(error);
+
+              logoutFirebase().then(el => {
+
+                logoutUser(state.uid).then((response) => {
+                  commit("DELETE_USER_SECTION");
+                  resolve(response);
+
+                }).catch((error) => {
+                  reject(error);
+                })
+              
+              }).catch(error => {
+                reject(error)
               })
+
+              
             }else{
               reject("User not logged");
             }
@@ -78,7 +89,7 @@ import UserStorageService from '.././services/storage.service.js'
 
         register({commit}){
           return new Promise(function(resolve, reject) {
-            signIn().then((result) => {
+            signInFirebase().then((result) => {
               const uid = result.user.uid;
               const displayName = result.user.displayName;
               const photoURL = result.user.photoURL;
