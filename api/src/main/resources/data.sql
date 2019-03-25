@@ -10,5 +10,3 @@ INSERT INTO post(id, content, name, topic_id, user_id) VALUES (2, 'content2', 'p
 INSERT INTO topic_tags(topic_id, tag_id) VALUES (1, 1)
 INSERT INTO topic_tags(topic_id, tag_id) VALUES (1, 2)
 INSERT INTO topic_tags(topic_id, tag_id) VALUES (2, 1)
-INSERT INTO user_comments(user_id, post_id) VALUES (1,1)
-INSERT INTO user_comments(user_id, post_id) VALUES (1,2)
