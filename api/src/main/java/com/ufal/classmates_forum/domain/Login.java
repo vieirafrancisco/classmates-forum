@@ -4,9 +4,7 @@ public class Login {
 
     private String UID;
 
-    public Login(int id, String UID){
-        this.UID = UID;
-    }
+    public Login(){}
 
     public String getUID(){
         return this.UID;
