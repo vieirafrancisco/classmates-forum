@@ -1,0 +1,13 @@
+{
+    "userStatus": {
+        "login": {
+            "406" : {"message" : "user logged"}
+        },
+        "logout": {
+            
+        },
+        "create": {
+            "200" : {"message" : "Register sucess"}
+        }
+    }
+}

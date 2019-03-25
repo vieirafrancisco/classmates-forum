@@ -13,8 +13,11 @@ import {userRoutes} from "../api/routes.config.json"
  * 
  * @returns {Promise}
  */
-export const createUser = ({uid, displayName, photoUrl, email}) => {
-   return api.post(userRoutes["create"], {uid, displayName, photoUrl, email})
+export const createUser = (uid, displayName, photoUrl, email) => {
+    return api.post(userRoutes["create"], {
+        uid:uid, 
+        name:displayName
+    });
 }
 
 
