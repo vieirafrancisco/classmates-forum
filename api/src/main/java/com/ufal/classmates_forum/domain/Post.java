@@ -19,7 +19,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonBackReference(value="topic_post")
+    @JsonManagedReference(value="topic_post")
     @ManyToOne
     @JoinColumn(name = "topic_id")
     private Topic topic;

@@ -2,7 +2,6 @@ package com.ufal.classmates_forum.domain;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Vector;
 
 @Entity
 public class Tag {
@@ -43,7 +42,7 @@ public class Tag {
         this.name = name;
     }
 
-    public List<Topic> getTopics() {
+    public List<Topic> topics() {
         return topics;
     }
 
