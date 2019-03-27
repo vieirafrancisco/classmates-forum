@@ -16,8 +16,7 @@ public class Tag {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.PERSIST
             },
             mappedBy = "tags")
     @JsonIgnore

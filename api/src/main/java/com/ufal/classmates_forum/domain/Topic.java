@@ -20,7 +20,6 @@ public class Topic {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
                     CascadeType.PERSIST
             })
     @JoinTable(name = "topic_tags",
