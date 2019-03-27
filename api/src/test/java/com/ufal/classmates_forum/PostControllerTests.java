@@ -42,4 +42,23 @@ public class PostControllerTests extends DefaultControllerTest{
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 200;
     }
+    //Post Id Already Exists test
+    @Test
+    public void testPostIdAlreadyExists(){
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(
+                "{\"id\":1,\"name\":\"Tagx\",\"content\":\"Something\"}",headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/post"), HttpMethod.POST,entity,String.class);
+        assert response.getStatusCodeValue() == 406;
+    }
+    //Post Not Found test
+    @Test
+    public void testPostNotFound(){
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/post/150"), HttpMethod.GET,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        assert response.getStatusCodeValue() == 404;
+    }
 }

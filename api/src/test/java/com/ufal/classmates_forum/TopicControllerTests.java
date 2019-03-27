@@ -45,4 +45,24 @@ public class TopicControllerTests extends DefaultControllerTest {
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 200;
     }
+    //Topic Not Found Test
+    @Test
+    public void testTopicNotFound(){
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/tag/134"), HttpMethod.GET,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        assert response.getStatusCodeValue() == 404;
+    }
+    //Topic Id Already Existis
+    @Test
+    public void testTopicIdAlreadyExists(){
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(
+                "{\"id\":1,\"description\":\"jadson\"}",headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/tag"), HttpMethod.POST,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        assert response.getStatusCodeValue() == 406;
+    }
 }

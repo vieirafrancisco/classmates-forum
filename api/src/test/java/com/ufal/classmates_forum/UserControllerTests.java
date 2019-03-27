@@ -16,6 +16,28 @@ public class UserControllerTests extends DefaultControllerTest {
         assert response.contains("created");
     }
 
+    //User Already Exists Test
+    @Test
+    public void testUserAlreadyCreated() throws Exception{
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(
+                "{\"id\":1,\"uid\":100,\"name\":\"jadson\"}",headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/user"), HttpMethod.POST,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        assert response.getStatusCodeValue() == 406;
+    }
+
+    //User Not Found test
+    @Test
+    public void testUserNotFound() throws Exception{
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/user/5"), HttpMethod.GET,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        assert response.getStatusCodeValue() == 404;
+    }
+
     //Get a user test
     @Test
     public void testGetUser() throws Exception{

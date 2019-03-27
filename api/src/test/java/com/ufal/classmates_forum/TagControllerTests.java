@@ -45,4 +45,23 @@ public class TagControllerTests extends DefaultControllerTest {
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 200;
     }
+    //Tag Already Existis Test
+    @Test
+    public void testTagAlreadyExists(){
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(
+                "{\"id\":1,\"name\":\"jadson\"}",headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/tag"), HttpMethod.POST,entity,String.class);
+        assert response.getStatusCodeValue() == 406;
+    }
+    //Tag Not Found Test
+    @Test
+    public void testTagNotFound(){
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/tag/149"), HttpMethod.GET,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        assert response.getStatusCodeValue() == 404;
+    }
 }
