@@ -16,6 +16,10 @@ public class User {
     private int id;
     private String name;
 
+    @JsonManagedReference("user_topic")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "author")
+    private List<Topic> topics;
+
     @Column(unique=true)
     private String UID;
 
@@ -60,4 +64,13 @@ public class User {
     public void setUID(String UID){
         this.UID = UID;
     }
+
+    public List<Topic> getTopics(){
+        return this.topics;
+    }
+
+    public void setTopics(List<Topic> topics){
+        this.topics = topics;
+    }
+
 }

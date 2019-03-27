@@ -2,6 +2,7 @@ package com.ufal.classmates_forum.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
@@ -17,6 +18,11 @@ public class Topic {
     @JsonManagedReference("topic_post")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Post> posts;
+
+    @JsonBackReference("user_topic")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -63,5 +69,17 @@ public class Topic {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public User getAuthor(){
+        return this.author;
+    }
+
+    public void setAuthor(User author){
+        this.author = author;
+    }
+
+    public String getAuthorName(){
+        return this.author.getName();
     }
 }
