@@ -26,20 +26,10 @@ public class UserController {
 
     @GetMapping(value="/users")
     public ResponseEntity<?> getAllUsers(){
-
-        if(repository.count() != 0){
-
-            return new ResponseEntity<>(
-                repository.findAll(),
-                HttpStatus.OK
-            );         
-
-        }
-
         return new ResponseEntity<>(
-                HttpStatus.NO_CONTENT
-        );
-
+            repository.findAll(),
+            HttpStatus.OK
+        ); 
     }
 
     @GetMapping(value="/user/{id}")
@@ -65,10 +55,17 @@ public class UserController {
     @PostMapping(value="/user")
     @ResponseBody
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        
+
+        if(repository.existsByUid(user.getUid())){
+            return new ResponseEntity<>(
+                String.format("User with this uid already exist!"),
+                HttpStatus.NOT_ACCEPTABLE
+            );
+        }
+
         if(repository.existsById(user.getId())){
             return new ResponseEntity<>(
-                String.format("User with id: %d already exist!", user.getId()),
+                String.format("User with this id already exist!"),
                 HttpStatus.NOT_ACCEPTABLE
             );
         }
@@ -78,7 +75,7 @@ public class UserController {
         return new ResponseEntity<>(
             String.format("User %s created succefuly!", user.getName()), 
             HttpStatus.CREATED
-            );
+        );
     }
 
     @DeleteMapping(value="/user/{id}")
