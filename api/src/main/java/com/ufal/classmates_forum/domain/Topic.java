@@ -1,10 +1,10 @@
 package com.ufal.classmates_forum.domain;
 
+import javax.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.*;
 import java.util.List;
-import java.util.Vector;
 
 @Entity
 public class Topic {
@@ -14,22 +14,18 @@ public class Topic {
     private int id;
     private String description;
 
-
-    //One topic to N posts
-    @JsonManagedReference(value="topic_post")
+    @JsonManagedReference("topic_post")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Post> posts;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
                     CascadeType.PERSIST
             })
     @JoinTable(name = "topic_tags",
             joinColumns = {@JoinColumn(name = "topic_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tags;
-
 
     public Topic(){}
 

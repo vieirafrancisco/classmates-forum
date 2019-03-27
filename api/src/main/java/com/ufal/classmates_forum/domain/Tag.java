@@ -1,8 +1,10 @@
 package com.ufal.classmates_forum.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
-import java.util.Vector;
 
 @Entity
 public class Tag {
@@ -14,12 +16,11 @@ public class Tag {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.PERSIST
             },
             mappedBy = "tags")
+    @JsonIgnore
     private List<Topic> topics;
-
 
     public Tag(){}
 
