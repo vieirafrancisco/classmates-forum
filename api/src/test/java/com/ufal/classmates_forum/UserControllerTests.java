@@ -1,25 +1,9 @@
 package com.ufal.classmates_forum;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration
-public class UserControllerTests {
-
-    @LocalServerPort
-    private int port;
-
-    TestRestTemplate restTemplate = new TestRestTemplate();
-
-    HttpHeaders headers = new HttpHeaders();
+public class UserControllerTests extends DefaultControllerTest {
 
     //Create User Test
     @Test
@@ -61,7 +45,7 @@ public class UserControllerTests {
         assert response.getStatusCodeValue() == 200;
     }
 
-    //Route not implemented
+    /*Route not implemented
     @Test
     public void testUpdateUser() throws Exception{
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -71,7 +55,5 @@ public class UserControllerTests {
                 createURLWithPort("/user/2"), HttpMethod.PUT,entity,String.class);
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 200;
-    }
-
-    private String createURLWithPort(String uri){return "http://localhost:" + port + uri;}
+    }*/
 }
