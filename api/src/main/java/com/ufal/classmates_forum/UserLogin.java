@@ -22,15 +22,15 @@ public class UserLogin {
         return instance;
     }
 
-    public boolean existByUID(String nuid){
+    public boolean existByUid(String nuid){
         for(int i = 0; i < loggedUsers.size(); i++){
             if(loggedUsers.get(i).equals(nuid)) return true;
         }
         return false;
     }
 
-    public void addUserUID(String uid) throws UserAlreadyLoggedException {
-        if(!existByUID(uid)){
+    public void addUserUid(String uid) throws UserAlreadyLoggedException {
+        if(!existByUid(uid)){
             loggedUsers.add(uid);
         } else {
             throw new UserAlreadyLoggedException(
@@ -39,8 +39,8 @@ public class UserLogin {
         }
     }
 
-    public void removeUserUID(String uid) throws UserNotLoggedException {
-        if(existByUID(uid)){
+    public void removeUserUid(String uid) throws UserNotLoggedException {
+        if(existByUid(uid)){
             loggedUsers.remove(uid);
         } else{
             throw new UserNotLoggedException(

@@ -25,8 +25,8 @@ public class UserLoginController {
         String uid = login.getUID();
         
         try{
-            if(existsByUID(uid)){
-                UserLogin.getInstance().addUserUID(uid);
+            if(existsByUid(uid)){
+                UserLogin.getInstance().addUserUid(uid);
             } else{
                 return new ResponseEntity<>(
                     String.format("User not found!"),
@@ -49,9 +49,9 @@ public class UserLoginController {
     public ResponseEntity<?> logout(@RequestBody Login login){
         String uid = login.getUID();
         
-        if(existsByUID(uid)){
+        if(existsByUid(uid)){
             try{
-                UserLogin.getInstance().removeUserUID(uid);
+                UserLogin.getInstance().removeUserUid(uid);
                 
                 return new ResponseEntity<>(
                     HttpStatus.OK
@@ -70,9 +70,9 @@ public class UserLoginController {
         );
     } 
 
-    private boolean existsByUID(String uid){
+    private boolean existsByUid(String uid){
         for(User user: userRepository.findAll()){
-            if(user.getUID().equals(uid)){
+            if(user.getUid().equals(uid)){
                 return true;
             }
         }

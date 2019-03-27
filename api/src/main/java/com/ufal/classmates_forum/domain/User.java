@@ -17,7 +17,7 @@ public class User {
     private String name;
 
     @Column(unique=true)
-    private String UID;
+    private String uid;
 
     @JsonManagedReference("user_post")
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
@@ -53,11 +53,11 @@ public class User {
         this.posts = posts;
     }
 
-    public String getUID(){
-        return this.UID;
+    public String getUid(){
+        return this.uid;
     }
 
-    public void setUID(String UID){
-        this.UID = UID;
+    public void setUid(String uid){
+        this.uid = uid;
     }
 }
