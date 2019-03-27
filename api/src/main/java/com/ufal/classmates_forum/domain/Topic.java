@@ -1,8 +1,9 @@
 package com.ufal.classmates_forum.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ public class Topic {
     private int id;
     private String description;
 
-    @JsonBackReference(value="topic_post")
+    @JsonManagedReference("topic_post")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Post> posts;
 

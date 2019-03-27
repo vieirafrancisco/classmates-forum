@@ -1,6 +1,9 @@
 package com.ufal.classmates_forum.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -17,8 +20,8 @@ public class Tag {
                     CascadeType.MERGE
             },
             mappedBy = "tags")
+    @JsonIgnore
     private List<Topic> topics;
-
 
     public Tag(){}
 
@@ -42,7 +45,7 @@ public class Tag {
         this.name = name;
     }
 
-    public List<Topic> topics() {
+    public List<Topic> getTopics() {
         return topics;
     }
 
