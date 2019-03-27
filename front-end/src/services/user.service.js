@@ -49,5 +49,7 @@ export const loginUser = (uid) => {
  * @returns {Promise}
  */
 export const logoutUser = (uid) => {
-    return api.post(userRoutes["logout"], {uid}) 
+    return api.post(userRoutes["logout"], {
+        uid:uid
+    }) 
 }

@@ -1,19 +1,14 @@
 <template>
     <div>
-        <li v-for="error in errors">
+        <li v-for="error in errors" v-bind:key = "error.message">
             {{ error.message }}
         </li>
         <button  @click="login">Login with Google</button>
         <button  @click="singUp">SingUp with Google</button>        
-        <div>
-            <p>Name: {{name}}</p>
-
-        </div>
     </div>
 </template>
 
 <script>
-import {userStatus} from "../api/status.config.json"
 
 export default {
     name: "Login",
@@ -23,49 +18,36 @@ export default {
         }
     },
     methods: {
-        
         login: function () {
-            this.$store.dispatch("login").then(result => {
-                
-            }).catch(error => {
-                const statusCode = error.response.status;
-                const loginStatus = userStatus.login
-                if(statusCode >= 500){
-                    this.errors.push({message : "Try again!!!"});
-                }else{
-                    if(statusCode in loginStatus){
-                        this.errors.push(loginStatus[statusCode]);
-                    }else{
-                        this.errors.push({message : "Erro não esperado"});
-                    }
-                }
+            this.$store.dispatch("apiAction", {
+                errorSection : "userStatus",
+                actionName : "login"
             })
-            
+            .then((response) => {
+
+            }).catch((errors) => {
+                this.errors = this.errors.concat(errors);
+            });
         },
 
         singUp: function () {
-            this.$store.dispatch("register").then(result => {
-                
-            }).catch(error => {
-                const statusCode = error.response.status;
-                const createStatus = userStatus.login
-
-                if(statusCode == 500){
-                    this.errors.push({message : "Try again!!!"});
-                }else{
-                    if(statusCode in createStatus){
-                        this.errors.push(createStatus[statusCode]);
-                    }else{
-                        this.errors.push({message : "Erro não esperado"});
-                    }
-                }
+            this.$store.dispatch("apiAction", {
+                errorSection : "userStatus",
+                actionName : "register"
             })
-            
+            .then((response) => {
+
+            }).catch((errors) => {
+                this.errors = this.errors.concat(errors);
+            });
         }
     },
     computed : {
         name(){
-            return this.$store.state.name
+            return this.$store.state.userStore.name;
+        },
+        logged(){
+            return this.$store.state.userStore.logged;
         }
     }
 

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="../assets/logo.png">
-    <router-link v-if = "logged" to="/logout"> Click for logout </router-link>
+    <a href = "#" v-if = "logged" v-on:click = "logout"> Click for logout </a>
     <router-link v-else to="/login"> Click for login </router-link>
     <router-link to="/topic"> Click for topic </router-link>
     <router-view></router-view>
@@ -16,9 +16,19 @@ export default {
   },
   computed : {
       logged() {
-          return this.$store.state.logged;
+          return this.$store.state.userStore.logged;
       }
+  },
+
+  methods : {
+    logout(){
+      this.$store.dispatch("logout")
     }
+  },
+  beforeMount() {
+    this.$store.commit("LOAD_USER_SECTION");
+  }
+
 }
 </script>
 
@@ -32,3 +42,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+ 
