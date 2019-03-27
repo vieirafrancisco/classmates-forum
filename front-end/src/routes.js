@@ -1,5 +1,5 @@
-import Login  from "./components/Login.vue";
-import Topic from "./components/Topic.vue";
+import Login  from "./views/Login.vue";
+import Topic from "./views/Topic.vue";
 
 const routes = [
     { path: '/login', component: Login},

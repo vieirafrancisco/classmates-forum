@@ -4,9 +4,10 @@ export function get() {
     return JSON.stringify(Topic);
 }
 
-export function getAll() {
+export function getAllTopics( ) {
     return JSON.stringify(Topics)
 }
+
 
 export function create() {
 
