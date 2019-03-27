@@ -13,9 +13,10 @@ public class UserControllerTests extends DefaultControllerTest {
                 "{\"uid\":100,\"name\":\"jadson\"}",headers);
         String response = restTemplate.postForObject(createURLWithPort("/user"),entity,String.class);
         System.out.println(response);
+        assert response.contains("created");
     }
 
-    //Get all users test
+    //Get a user test
     @Test
     public void testGetUser() throws Exception{
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -25,9 +26,9 @@ public class UserControllerTests extends DefaultControllerTest {
         assert response.getStatusCodeValue() == 200;
     }
 
-    //Get a user test
+    //Get all users test
     @Test
-    public void testGetUsers() throws Exception{
+    public void testGetAllUsers() throws Exception{
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/users"), HttpMethod.GET,entity,String.class);
