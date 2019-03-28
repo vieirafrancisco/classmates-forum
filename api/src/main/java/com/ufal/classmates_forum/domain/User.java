@@ -60,4 +60,9 @@ public class User {
     public void setUid(String uid){
         this.uid = uid;
     }
+
+    @Transient
+    public String getUserType(){
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
 }
