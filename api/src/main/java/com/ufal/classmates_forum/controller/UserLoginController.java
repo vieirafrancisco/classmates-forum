@@ -23,10 +23,11 @@ public class UserLoginController {
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody Login login){
         String uid = login.getUID();
-        
+        User user = userRepository.findByUid(uid);
+
         try{
             if(existsByUid(uid)){
-                UserLogin.getInstance().addUserUid(uid);
+                UserLogin.getInstance().addLoggedUser(uid, user.getUserType());
             } else{
                 return new ResponseEntity<>(
                     String.format("User not found!"),
@@ -51,7 +52,7 @@ public class UserLoginController {
         
         if(existsByUid(uid)){
             try{
-                UserLogin.getInstance().removeUserUid(uid);
+                UserLogin.getInstance().removeLoggedUser(uid);
                 
                 return new ResponseEntity<>(
                     HttpStatus.OK
