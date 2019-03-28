@@ -1,7 +1,6 @@
 package com.ufal.classmates_forum;
 
-import java.util.List;
-import java.util.Vector;
+import java.util.Hashtable;
 
 import com.ufal.classmates_forum.exceptions.UserAlreadyLoggedException;
 import com.ufal.classmates_forum.exceptions.UserNotLoggedException;;
@@ -9,10 +8,10 @@ import com.ufal.classmates_forum.exceptions.UserNotLoggedException;;
 public class UserLogin {
     
     private static UserLogin instance;
-    private List<String> loggedUsers;
+    private Hashtable<String, String> loggedUsers;
 
     private UserLogin(){
-        loggedUsers = new Vector<>();
+        loggedUsers = new Hashtable<>();
     }
 
     public static UserLogin getInstance(){
@@ -23,15 +22,15 @@ public class UserLogin {
     }
 
     public boolean existByUid(String nuid){
-        for(int i = 0; i < loggedUsers.size(); i++){
-            if(loggedUsers.get(i).equals(nuid)) return true;
+        for(String uid: loggedUsers.keySet()){
+            if(uid.equals(nuid)) return true;
         }
         return false;
     }
 
-    public void addUserUid(String uid) throws UserAlreadyLoggedException {
+    public void addLoggedUser(String uid, String userType) throws UserAlreadyLoggedException {
         if(!existByUid(uid)){
-            loggedUsers.add(uid);
+            loggedUsers.put(uid, userType);
         } else {
             throw new UserAlreadyLoggedException(
                 String.format("User already logged!")
@@ -39,7 +38,7 @@ public class UserLogin {
         }
     }
 
-    public void removeUserUid(String uid) throws UserNotLoggedException {
+    public void removeLoggedUser(String uid) throws UserNotLoggedException {
         if(existByUid(uid)){
             loggedUsers.remove(uid);
         } else{
