@@ -7,21 +7,22 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
 
 @Entity
-@Inheritance
-@DiscriminatorColumn(name = "user_type")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
     private String name;
+
+    private String userType;
+
+    @Column(unique=true)
+    private String uid;
 
     @JsonManagedReference("user_topic")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "author")
     private List<Topic> topics;
-
-    @Column(unique=true)
-    private String UID;
 
     @JsonManagedReference("user_post")
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
@@ -57,12 +58,20 @@ public class User {
         this.posts = posts;
     }
 
-    public String getUID(){
-        return this.UID;
+    public String getUid(){
+        return this.uid;
     }
 
-    public void setUID(String UID){
-        this.UID = UID;
+    public void setUid(String uid){
+        this.uid = uid;
+    }
+
+    public String getUserType(){
+        return this.userType;
+    }
+
+    public void setUserType(String userType){
+        this.userType = userType;
     }
 
     public List<Topic> getTopics(){
@@ -72,5 +81,4 @@ public class User {
     public void setTopics(List<Topic> topics){
         this.topics = topics;
     }
-
 }

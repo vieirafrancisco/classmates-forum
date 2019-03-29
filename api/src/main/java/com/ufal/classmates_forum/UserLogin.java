@@ -1,7 +1,6 @@
 package com.ufal.classmates_forum;
 
-import java.util.List;
-import java.util.Vector;
+import java.util.Hashtable;
 
 import com.ufal.classmates_forum.exceptions.UserAlreadyLoggedException;
 import com.ufal.classmates_forum.exceptions.UserNotLoggedException;;
@@ -9,10 +8,10 @@ import com.ufal.classmates_forum.exceptions.UserNotLoggedException;;
 public class UserLogin {
     
     private static UserLogin instance;
-    private List<String> loggedUsers;
+    private Hashtable<String, String> loggedUsers;
 
     private UserLogin(){
-        loggedUsers = new Vector<>();
+        loggedUsers = new Hashtable<>();
     }
 
     public static UserLogin getInstance(){
@@ -22,16 +21,13 @@ public class UserLogin {
         return instance;
     }
 
-    public boolean existByUID(String nuid){
-        for(int i = 0; i < loggedUsers.size(); i++){
-            if(loggedUsers.get(i).equals(nuid)) return true;
-        }
-        return false;
+    public boolean existByUid(String uid){
+        return (uid != null) ? loggedUsers.containsKey(uid):false;
     }
 
-    public void addUserUID(String uid) throws UserAlreadyLoggedException {
-        if(!existByUID(uid)){
-            loggedUsers.add(uid);
+    public void addLoggedUser(String uid, String userType) throws UserAlreadyLoggedException {
+        if(!existByUid(uid)){
+            loggedUsers.put(uid, userType);
         } else {
             throw new UserAlreadyLoggedException(
                 String.format("User already logged!")
@@ -39,14 +35,18 @@ public class UserLogin {
         }
     }
 
-    public void removeUserUID(String uid) throws UserNotLoggedException {
-        if(existByUID(uid)){
+    public void removeLoggedUser(String uid) throws UserNotLoggedException {
+        if(existByUid(uid)){
             loggedUsers.remove(uid);
         } else{
             throw new UserNotLoggedException(
                 String.format("User not logged!")
             );
         }
+    }
+
+    public String getUserTypeByUid(String uid){
+        return loggedUsers.get(uid);
     }
 
 }
