@@ -3,7 +3,9 @@ package com.ufal.classmates_forum.controller;
 import java.util.Optional;
 
 import com.ufal.classmates_forum.domain.Tag;
+import com.ufal.classmates_forum.domain.Topic;
 import com.ufal.classmates_forum.repository.TagRepository;
+import com.ufal.classmates_forum.repository.TopicRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ public class TagController {
 
     @Autowired
     private TagRepository repository;
+
+    @Autowired
+    private TopicRepository topicRepository;
 
     @GetMapping(value="tag/{id}")
     public ResponseEntity<?> getTagById(@PathVariable Integer id){
@@ -65,6 +70,11 @@ public class TagController {
 
         if(repository.existsById(id)){
             Optional<Tag> tag = repository.findById(id);
+
+            for(Topic topic: topicRepository.findAll()){
+                topic.getTags().remove(tag.get());
+            }
+
             repository.deleteById(id);
 
             return new ResponseEntity<>(
