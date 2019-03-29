@@ -1,3 +1,5 @@
+import api from "../api/axiosAPI"
+import {topicRoutes} from "../api/routes.config.json" 
 import { Topic, Topics } from "../ApiMock.json";
 
 export function get() {
@@ -5,7 +7,7 @@ export function get() {
 }
 
 export function getAllTopics( ) {
-    return JSON.stringify(Topics)
+    return api.get(topicRoutes["getTopics"])
 }
 
 

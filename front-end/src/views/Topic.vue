@@ -8,6 +8,9 @@
 import TopicItemList from "../components/TopicItemList.vue"
 
 export default {
-    "name" : "Topic"
+    name : "Topic",
+    components : {
+        TopicItemList
+    }
 } 
 </script>

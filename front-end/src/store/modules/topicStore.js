@@ -1,4 +1,4 @@
-import {getAll} from "../../services/topic.service"
+import {getAllTopics} from "../../services/topic.service"
 
 const topicStore = {
     state : {
@@ -12,14 +12,17 @@ const topicStore = {
     },
 
     actions : {
-        fecth_topics({commit}) {
-            return new Promise(function(resolve, reject){
+        getTopics({commit}) {
+            return new Promise((resolve, rejected) => {
                 getAllTopics().then((response) => {
+                    commit("SET_TOPICS", response.data)
                     resolve(response.data);
                 }).catch((error) => {
-                    reject(error);
+                    rejected(error);
                 });
-            });
+            })
         }
     }
 }
+
+export default topicStore;

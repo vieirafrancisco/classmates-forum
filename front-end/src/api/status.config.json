@@ -9,7 +9,14 @@
                 
             },
             "register": {
-                "200" : {"message" : "Register sucess"}
+                "200" : {"message" : "Register sucess"},
+                "406" : {"message" : "User registed"}
+            }
+        },
+
+        "topicStatus" : {
+            "getTopics" : {
+
             }
         }
     },

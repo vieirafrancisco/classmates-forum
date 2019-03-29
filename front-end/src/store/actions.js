@@ -21,7 +21,7 @@ export function apiAction(context, {errorSection, actionName, args}) {
             }else if(statusCode in serverErrors){
                 errors.push(serverErrors[statusCode])
             }
-            
+
             reject(errors)
         });
     }); 

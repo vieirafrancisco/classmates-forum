@@ -64,7 +64,6 @@ const userStore = {
 
         logout({commit,state}){
           return new Promise(function(resolve, reject){
-            
             if(state.logged){
 
               logoutFirebase().then(el => {

@@ -7,6 +7,11 @@
 <script>
 
 export default {
-    "name" : "TopicItemList"
+    name : "TopicItemList",
+    data : function(){
+        return {
+            
+        }
+    }
 }
 </script>

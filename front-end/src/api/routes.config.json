@@ -3,6 +3,9 @@
         "login" : "/login",
         "logout" : "/logout",
         "create" : "/user"
+    },
+    "topicRoutes" : {
+        "getTopics" : "/topics"
     }
 }
 
