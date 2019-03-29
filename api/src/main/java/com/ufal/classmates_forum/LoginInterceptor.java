@@ -14,7 +14,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     public LoginInterceptor(){
         routesAdmin.add("/users");
-        routesAdmin.add("/user/{id}");
+        routesAdmin.add("/user/[0-9]");
         routesAdmin.add("/topic");
     }
 
@@ -24,7 +24,33 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         Object handler
     ) throws Exception {
         
+        String uri = request.getRequestURI();
+        String msg;
+        
+        if(routesAdmin.contains(uri) || matchesRegexRoute(uri)){
+            String uid = request.getHeader("token");
+
+            if(UserLogin.getInstance().existByUid(uid)){
+                if(UserLogin.getInstance().getUserTypeByUid(uid).equals("admin")){
+                    return true;
+                } else{
+                    msg = "User not Admin!";
+                    response.sendRedirect("/error/admin/" + msg);
+                }
+            } else{
+                msg = "Non user Logged!";
+                response.sendRedirect("/error/" + msg);
+            }
+        }
+
         return true;
+    }
+
+    private boolean matchesRegexRoute(String uri){
+        for(String route: routesAdmin){
+            if(uri.matches(route)) return true;
+        }
+        return false;
     }
 
 }
