@@ -21,11 +21,8 @@ public class UserLogin {
         return instance;
     }
 
-    public boolean existByUid(String nuid){
-        for(String uid: loggedUsers.keySet()){
-            if(uid.equals(nuid)) return true;
-        }
-        return false;
+    public boolean existByUid(String uid){
+        return (uid != null) ? loggedUsers.containsKey(uid):false;
     }
 
     public void addLoggedUser(String uid, String userType) throws UserAlreadyLoggedException {
@@ -46,6 +43,10 @@ public class UserLogin {
                 String.format("User not logged!")
             );
         }
+    }
+
+    public String getUserTypeByUid(String uid){
+        return loggedUsers.get(uid);
     }
 
 }
