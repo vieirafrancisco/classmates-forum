@@ -7,14 +7,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
 
 @Entity
-@Inheritance
-@DiscriminatorColumn(name = "user_type")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
     private String name;
+
+    private String userType;
 
     @Column(unique=true)
     private String uid;
@@ -61,8 +62,12 @@ public class User {
         this.uid = uid;
     }
 
-    @Transient
     public String getUserType(){
-        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+        return this.userType;
     }
+
+    public void setUserType(String userType){
+        this.userType = userType;
+    }
+    
 }
