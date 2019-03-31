@@ -26,7 +26,7 @@ export default {
       .then((response) => {
         
       }).catch((error) => {
-        alert(error);
+        
       });
     }
   },

@@ -33,7 +33,7 @@ export function getAllTopics( ) {
  * @returns {Promise}
  */
 export function createTopic({uid, description, tags}) {
-    return api.post(topicRoutes["create"], {
+    return api.post(topicRoutes["createTopic"], {
         author: {uid : uid}, 
         description : description,
         tags : tags

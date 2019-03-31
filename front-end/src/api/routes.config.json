@@ -5,7 +5,8 @@
         "create" : "/user"
     },
     "topicRoutes" : {
-        "getTopics" : "/topics"
+        "getTopics" : "/topics",
+        "createTopic" : "/topic"
     }
 }
 

@@ -20,15 +20,19 @@ const topicStore = {
         async getTopics({dispatch,commit}) {
             commit("SET_LOADING");
 
-            const responseAllTopics = await dispatch("callService", {"name" : "getAllTopics"});
-
+            const responseAllTopics = await dispatch("callService", {name : "getAllTopics"});
+            
             commit("SET_LOADING");
             commit("SET_TOPICS", responseAllTopics.data);
+
+            return responseAllTopics;
         },
 
-        createTopic({commit}, topic){
-            apicall("admin",function(uid){
-            });
+        async createTopic({dispatch,commit}, topic){
+            const createTopicData = {name : "createTopic", data : topic}
+            const responseCreateTopic = await dispatch("callService", createTopicData);
+
+            return responseCreateTopic;
         }
     }
 }
