@@ -19,26 +19,22 @@ export default {
     },
     methods: {
         login: function () {
-            this.$store.dispatch("apiAction", {
-                errorSection : "userStatus",
-                actionName : "login"
-            })
+            this.$store.dispatch("login")
             .then((response) => {
-
-            }).catch((errors) => {
-                this.errors = this.errors.concat(errors);
+                
+            })
+            .catch((error) => {
+                this.errors.push(error);
             });
         },
 
         singUp: function () {
-            this.$store.dispatch("apiAction", {
-                errorSection : "userStatus",
-                actionName : "register"
-            })
+            this.$store.dispatch("register")
             .then((response) => {
-
-            }).catch((errors) => {
-                this.errors = this.errors.concat(errors);
+                
+            })
+            .catch((error) => {
+                this.errors.push(error);
             });
         }
     },

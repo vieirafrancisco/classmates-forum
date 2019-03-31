@@ -1,6 +1,6 @@
 import userStore from './modules/userStore.js'
 import topicStore from './modules/topicStore.js'
-import {apiAction} from './actions.js'
+import {callService} from './actions.js'
 
 const mainStore = {
     modules : {
@@ -9,8 +9,9 @@ const mainStore = {
     },
 
     actions : {
-        apiAction
+        callService
     }
+
 };
 
 export default mainStore;

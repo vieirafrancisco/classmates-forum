@@ -1,25 +1,23 @@
 <template>
     <div>
-        <button v-on:click="get">Clique aqui para o console.log</button>
-        <p>{{msg}}</p>
+        <p>Titulo: {{ topic.description }} </p>
+        <p>Autor: {{ topic.authorName }}
+        <li v-for = "tag in topic.tags">{{ tag.name }}</li>
     </div>
 </template>
 
 
 <script>
-import * as Topic from "../services/topic.service.js";
-
 export default {
-    name: "Topic",
+    name: "TopicItem",
     data: function(){
-        return {msg: ""};
+        return {
+        };
     }, 
 
+    props : ["topic"],
 
     methods: {
-        get: function() {
-            this.msg = Topic.get();
-        } 
     }
 }
 </script>

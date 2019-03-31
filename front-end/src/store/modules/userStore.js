@@ -1,6 +1,8 @@
+import {sectionStatus} from "../../api/status.config.json"
 import { signInFirebase, logoutFirebase } from "../../services/firebase.service"
 import { createUser, loginUser, logoutUser } from "../../services/user.service"
 import UserStorageService from '../../services/storage.service.js'
+
 
 const userStore = {
     state: {
@@ -42,72 +44,43 @@ const userStore = {
     },
 
     actions : {
-        login({commit}){
-          return new Promise(function(resolve, reject){
+        
+      async login({dispatch,commit}){
+        const responseFirebase = await dispatch("callService", {name : "signInFirebase"});
+        const user_uid = responseFirebase.user.uid;
+        const loginUserData = {name : "loginUser", data : {uid : user_uid}}
+        const responseLoginUser = await dispatch("callService", loginUserData);
 
-            signInFirebase().then((result) =>{
-              const uid = result.user.uid;
-              loginUser(uid).then((response) => {
-                commit("SAVE_USER_SECTION", result.user);
-                commit("SET_USER_TOKEN", result.credential.token)
+        commit("SAVE_USER_SECTION", responseFirebase.user);
+        commit("SET_USER_TOKEN", responseFirebase.credential.token);
 
-                resolve(response);
-              }).catch((error) => {
-                reject(error);
-              }); 
+        return responseLoginUser;
 
-            }).catch((error) => {
-                reject(error);
-            })
-          });
-        },
+      },
 
-        logout({commit,state}){
-          return new Promise(function(resolve, reject){
-            if(state.logged){
+      async logout({dispatch,commit}){
+        const responseFirebase = await dispatch("callService", {name : "logoutFirebase"});
+        const responseLogoutUser = await dispatch("callService", {name : "logoutUser"});
+        
+        commit("DELETE_USER_SECTION");
 
-              logoutFirebase().then(el => {
-                logoutUser(state.uid).then((response) => {
-                  commit("DELETE_USER_SECTION");
-                  resolve(response);
+        return responseLogoutUser;
+      },
 
-                }).catch((error) => {
-                  reject(error);
-                })
-              
-              }).catch(error => {
-                reject(error)
-              })
+      async register({dispatch,commit}){
+        const responseFirebase = await dispatch("callService", {name : "signInFirebase"});
+        const userFirebase = responseFirebase.user
+        const user_uid = userFirebase.uid;
+        const createUserData = {name : "createUser", data : userFirebase}
+        const responseCreateUser = await dispatch("callService", createUserData);
+        const loginUserData = {name : "loginUser", data : {uid : user_uid}}
+        const responseLoginUser = await dispatch("callService", loginUserData);
+        
+        commit("SAVE_USER_SECTION", userFirebase);
+        commit("SET_USER_TOKEN", responseFirebase.credential.token);
 
-              
-            }else{
-              reject("User not logged");
-            }
-          });
-
-        },
-
-        register({commit}){
-          return new Promise(function(resolve, reject) {
-            signInFirebase().then((result) => {
-              const uid = result.user.uid;
-              const displayName = result.user.displayName;
-              const photoURL = result.user.photoURL;
-              const email = result.user.email;
-              createUser(uid, displayName, photoURL, email).then((response) => {
-                commit("SAVE_USER_SECTION", result.user);
-                commit("SET_USER_TOKEN", result.credential.token);
-                
-                resolve(response);
-              }).catch((error) => {
-                reject(error);
-              })
-
-            }).catch((error) => {
-              reject(error);
-            });
-          })
-        },
+        return responseCreateUser;
+      },
     }
   }
 

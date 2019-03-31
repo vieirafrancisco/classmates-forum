@@ -22,26 +22,16 @@ export default {
 
   methods : {
     logout(){
-      this.$store.dispatch("apiAction", {
-        errorSection : "userStatus",
-        actionName : "logout"
-      }).then((response) => {
-
+      this.$store.dispatch("logout")
+      .then((response) => {
+        
       }).catch((error) => {
-
+        alert(error);
       });
     }
   },
   beforeMount() {
     this.$store.commit("LOAD_USER_SECTION");
-    this.$store.dispatch("apiAction", {
-      errorSection : "topicStatus",
-      actionName : "getTopics"
-    }).then((response) => {
-        alert(JSON.stringify(response))
-    }).catch(error => {
-      
-    });
   }
 
 }

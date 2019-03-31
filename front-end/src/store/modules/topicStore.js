@@ -2,25 +2,33 @@ import {getAllTopics} from "../../services/topic.service"
 
 const topicStore = {
     state : {
-        topics : []
+        topics : [],
+        loading : false
     },
 
     mutations : {
         SET_TOPICS(state, topics) {
             state.topics = topics;
+        },
+        SET_LOADING(state){
+            state.loading = !state.loading
         }
+
     },
 
     actions : {
-        getTopics({commit}) {
-            return new Promise((resolve, rejected) => {
-                getAllTopics().then((response) => {
-                    commit("SET_TOPICS", response.data)
-                    resolve(response.data);
-                }).catch((error) => {
-                    rejected(error);
-                });
-            })
+        async getTopics({dispatch,commit}) {
+            commit("SET_LOADING");
+
+            const responseAllTopics = await dispatch("callService", {"name" : "getAllTopics"});
+
+            commit("SET_LOADING");
+            commit("SET_TOPICS", responseAllTopics.data);
+        },
+
+        createTopic({commit}, topic){
+            apicall("admin",function(uid){
+            });
         }
     }
 }

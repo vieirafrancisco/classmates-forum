@@ -4,7 +4,7 @@ const pathAPI = {
   "pc-lab": "http://172.19.190.132:8080"
 }
 const api = axios.create({
-  baseURL: pathAPI["pc-lab"],
+  baseURL: pathAPI["localhost"],
   timeout: 1000,
   headers: {}
 });

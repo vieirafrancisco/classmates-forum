@@ -6,14 +6,40 @@ export function get() {
     return JSON.stringify(Topic);
 }
 
+/**
+ * Get all of created topics
+ * 
+ * @param {Object} topics
+ * @param {Int} topic.id
+ * @param {String} topic.description
+ * @param {Object} topic.tags
+ * @param {Object} topic.posts
+ * @param {String} topic.author
+ * 
+ * @returns {Promise}
+ */
 export function getAllTopics( ) {
     return api.get(topicRoutes["getTopics"])
 }
 
-
-export function create() {
-
+/**
+ * Create an topic 
+ * 
+ * @param {Object} topic
+ * @param {String} topic.author.uid
+ * @param {String} topic.description
+ * @param {Object} topic.tags
+ * 
+ * @returns {Promise}
+ */
+export function createTopic({uid, description, tags}) {
+    return api.post(topicRoutes["create"], {
+        author: {uid : uid}, 
+        description : description,
+        tags : tags
+    });
 }
+
 
 export function remove() {
 
