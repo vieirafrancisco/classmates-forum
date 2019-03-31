@@ -1,0 +1,8 @@
+{
+    "userRoutes" : {
+        "login" : "/login",
+        "logout" : "/logout",
+        "create" : "/user"
+    }
+}
+

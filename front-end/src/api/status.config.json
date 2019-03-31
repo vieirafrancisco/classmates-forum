@@ -1,0 +1,23 @@
+{
+    "sectionStatus" : {
+        "userStatus": {
+            "login": {
+                "406" : {"message" : "user logged"},
+                "404" : {"message" : "user not found"}
+            },
+            "logout": {
+                
+            },
+            "register": {
+                "200" : {"message" : "Register sucess"}
+            }
+        }
+    },
+
+    "generalStatus" : {
+        "serveErrors" : {
+            "500" : {"message" : "internal server error"},
+            "ECONNABORTED" : {"message" : "service unavailable"}
+        }
+    }
+}

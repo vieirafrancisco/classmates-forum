@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+firebase.config.json
 
 # local env files
 .env.local
