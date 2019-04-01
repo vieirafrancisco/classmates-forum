@@ -1,5 +1,7 @@
 package com.ufal.classmates_forum;
 
+import com.ufal.classmates_forum.domain.User;
+import com.ufal.classmates_forum.exceptions.UserAlreadyLoggedException;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -10,13 +12,26 @@ public class TopicControllerTests extends DefaultControllerTest {
 
     //Create Topic test
     @Test
-    public void testCreateTopic(){
+    public void testCreateTopic() throws Exception{
+        User user = new User("abcd","admin");
+        UserLogin.getInstance().addLoggedUser(user);
+        headers.add("token","abcd");
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(
                 "{\"description\":\"jadson\"}",headers);
         String response = restTemplate.postForObject(createURLWithPort("/topic"),entity,String.class);
         System.out.println(response);
+        UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.contains("create");
+    }
+    //Get All Topics test
+    @Test
+    public void testGetAllTopics() throws Exception {
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/topics"), HttpMethod.GET,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        assert response.getStatusCodeValue() == 200;
     }
     //Get Topic test
     @Test
@@ -27,21 +42,12 @@ public class TopicControllerTests extends DefaultControllerTest {
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 200;
     }
-    //Get All Topics test
-    @Test
-    public void testGetAllTopics(){
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/topics"), HttpMethod.GET,entity,String.class);
-        System.out.println(response.getStatusCodeValue());
-        assert response.getStatusCodeValue() == 200;
-    }
     //Delete topic test
     @Test
     public void testDeleteTopic(){
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/topic/1"), HttpMethod.DELETE,entity,String.class);
+                createURLWithPort("/topic/2"), HttpMethod.DELETE,entity,String.class);
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 200;
     }
