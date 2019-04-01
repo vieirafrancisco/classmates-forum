@@ -2,13 +2,14 @@ package com.ufal.classmates_forum;
 
 import java.util.Hashtable;
 
+import com.ufal.classmates_forum.domain.User;
 import com.ufal.classmates_forum.exceptions.UserAlreadyLoggedException;
 import com.ufal.classmates_forum.exceptions.UserNotLoggedException;;
 
 public class UserLogin {
     
     private static UserLogin instance;
-    private Hashtable<String, String> loggedUsers;
+    private Hashtable<String, User> loggedUsers;
 
     private UserLogin(){
         loggedUsers = new Hashtable<>();
@@ -25,9 +26,10 @@ public class UserLogin {
         return (uid != null) ? loggedUsers.containsKey(uid):false;
     }
 
-    public void addLoggedUser(String uid, String userType) throws UserAlreadyLoggedException {
+    public void addLoggedUser(User user) throws UserAlreadyLoggedException {
+        String uid = user.getUid();
         if(!existByUid(uid)){
-            loggedUsers.put(uid, userType);
+            loggedUsers.put(uid, user);
         } else {
             throw new UserAlreadyLoggedException(
                 String.format("User already logged!")
@@ -46,6 +48,10 @@ public class UserLogin {
     }
 
     public String getUserTypeByUid(String uid){
+        return loggedUsers.get(uid).getUserType();
+    }
+
+    public User getUserByUid(String uid){
         return loggedUsers.get(uid);
     }
 

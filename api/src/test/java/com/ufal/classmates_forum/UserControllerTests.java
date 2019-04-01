@@ -1,5 +1,7 @@
 package com.ufal.classmates_forum;
 
+import com.ufal.classmates_forum.domain.User;
+
 import org.junit.Test;
 import org.springframework.http.*;
 
@@ -31,7 +33,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //User Not Found test
     @Test
     public void testUserNotFound() throws Exception{
-        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        User user = new User("abcd","admin");
+        UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
@@ -45,7 +48,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //Get a user test
     @Test
     public void testGetUser() throws Exception{
-        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        User user = new User("abcd","admin");
+        UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
@@ -59,7 +63,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //Get all users test
     @Test
     public void testGetAllUsers() throws Exception{
-        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        User user = new User("abcd","admin");
+        UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
@@ -72,7 +77,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //Delete a user test
     @Test
     public void testDeleteUser() throws Exception{
-        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        User user = new User("abcd","admin");
+        UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(

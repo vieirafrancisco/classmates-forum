@@ -27,7 +27,7 @@ public class UserLoginController {
 
         try{
             if(existsByUid(uid)){
-                UserLogin.getInstance().addLoggedUser(uid, user.getUserType());
+                UserLogin.getInstance().addLoggedUser(user);
             } else{
                 return new ResponseEntity<>(
                     String.format("User not found!"),

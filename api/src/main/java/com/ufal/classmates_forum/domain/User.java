@@ -21,7 +21,12 @@ public class User {
     private String uid;
 
     @JsonManagedReference("user_topic")
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "author")
+    @OneToMany(
+        fetch = FetchType.EAGER,
+        cascade = {
+            CascadeType.PERSIST,
+            CascadeType.REMOVE}, 
+        mappedBy = "author")
     private List<Topic> topics;
 
     @JsonManagedReference("user_post")
@@ -30,7 +35,8 @@ public class User {
 
     public User(){}
 
-    public User(String name){
+    public User(String uid, String name){
+        this.uid = uid;
         this.name = name;
     }
 

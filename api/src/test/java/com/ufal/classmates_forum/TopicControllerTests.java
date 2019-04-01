@@ -1,5 +1,6 @@
 package com.ufal.classmates_forum;
 
+import com.ufal.classmates_forum.domain.User;
 import com.ufal.classmates_forum.exceptions.UserAlreadyLoggedException;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
@@ -12,7 +13,8 @@ public class TopicControllerTests extends DefaultControllerTest {
     //Create Topic test
     @Test
     public void testCreateTopic() throws Exception{
-        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        User user = new User("abcd","admin");
+        UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(

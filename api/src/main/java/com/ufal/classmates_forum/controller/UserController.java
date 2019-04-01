@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -82,26 +83,14 @@ public class UserController {
         );
     }
 
-    @DeleteMapping(value="/user/{id}")
-    public ResponseEntity<?> removerUser(@PathVariable Integer id){
-
-        // User exist in repository
-        if(repository.existsById(id)){
-            Optional<User> user = repository.findById(id);
-            repository.deleteById(id);
-
-            return new ResponseEntity<>(
-                user.get().getId(),
-                HttpStatus.OK
-            );
-        }
+    @DeleteMapping(value="/user")
+    public ResponseEntity<?> removerUser(@RequestAttribute User user) {
+        repository.delete(user);
 
         return new ResponseEntity<>(
-            "User doesn't found",
-            HttpStatus.NOT_FOUND
+            user.getId(),
+            HttpStatus.OK
         );
-
     }
-    
 
 }

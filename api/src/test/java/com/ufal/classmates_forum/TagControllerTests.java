@@ -1,5 +1,7 @@
 package com.ufal.classmates_forum;
 
+import com.ufal.classmates_forum.domain.User;
+
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -20,7 +22,8 @@ public class TagControllerTests extends DefaultControllerTest {
     //Get all tags test
     @Test
     public void testGetAllTags() throws Exception{
-        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        User user = new User("abcd","admin");
+        UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
