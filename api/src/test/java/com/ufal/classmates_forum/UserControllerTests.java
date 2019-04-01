@@ -31,42 +31,57 @@ public class UserControllerTests extends DefaultControllerTest {
     //User Not Found test
     @Test
     public void testUserNotFound() throws Exception{
+        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/user/5"), HttpMethod.GET,entity,String.class);
         System.out.println(response.getStatusCodeValue());
+        UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.getStatusCodeValue() == 404;
+
     }
 
     //Get a user test
     @Test
     public void testGetUser() throws Exception{
+        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/user/1"), HttpMethod.GET,entity,String.class);
         System.out.println(response.getStatusCodeValue());
+        UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.getStatusCodeValue() == 200;
+
     }
 
     //Get all users test
     @Test
     public void testGetAllUsers() throws Exception{
+        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/users"), HttpMethod.GET,entity,String.class);
         System.out.println(response.getStatusCodeValue());
+        UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.getStatusCodeValue() == 200;
     }
 
     //Delete a user test
     @Test
     public void testDeleteUser() throws Exception{
+        UserLogin.getInstance().addLoggedUser("abcd","admin");
+        headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/user/1"), HttpMethod.DELETE,entity,String.class);
         System.out.println(response.getStatusCodeValue());
+        UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.getStatusCodeValue() == 200;
     }
+
 
     /*Route not implemented
     @Test
