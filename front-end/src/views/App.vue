@@ -18,7 +18,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <a href = "#" v-if = "logged" v-on:click = "logout"> Click for logout </a>
     <router-link v-else to="/login"> Click for login </router-link>
-    <router-link to="/topic"> Click for topic </router-link>
+    <router-link to="/topics"> Click for topic </router-link>
     <router-view></router-view>
   </div>
 </template>

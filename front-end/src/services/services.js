@@ -1,6 +1,7 @@
 import {signInFirebase, logoutFirebase} from './firebase.service'
 import {createUser, loginUser, logoutUser} from './user.service'
-import {getAllTopics, createTopic} from './topic.service'
+import {getTopic, getAllTopics, createTopic} from './topic.service'
+import {getPost, getTopicPosts} from './post.service'
 
 const firebaseServices = {
     signInFirebase : {
@@ -43,6 +44,13 @@ const userServices = {
 }
 
 const topicsServices = {
+    getTopic : {
+        func : getTopic,
+        params : {topicId : Number},
+        heading : {},
+        permition : "public"
+    },
+
     getAllTopics : {
         func : getAllTopics,
         params : {},
@@ -58,7 +66,23 @@ const topicsServices = {
     }
 }
 
-const services = [firebaseServices,userServices,topicsServices].reduce((acc, cur) => {
+const postServices = {
+    getPost : {
+        func : getPost,
+        params : {postId : Number},
+        heading : {},
+        permition : "public"
+    },
+
+    getTopicPosts : {
+        func : getTopicPosts,
+        params : {topicId : Number},
+        heading : {},
+        permition : "public"
+    }
+}
+
+const services = [firebaseServices,userServices,topicsServices,postServices].reduce((acc, cur) => {
     return {...acc, ...cur}
 })
 

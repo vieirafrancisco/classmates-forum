@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import TopicItemList from "../components/TopicItemList.vue"
-import TopicCreate from "../components/TopicCreate.vue"
+import TopicItemList from "../components/topic/TopicItemList.vue"
 
 export default {
     name : "Topic",
@@ -22,7 +21,6 @@ export default {
     },
     components : {
         TopicItemList,
-        TopicCreate
     },
     beforeMount(){
         this.$store.dispatch("getTopics")

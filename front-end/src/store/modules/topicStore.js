@@ -1,5 +1,3 @@
-import {getAllTopics} from "../../services/topic.service"
-
 const topicStore = {
     state : {
         topics : [],

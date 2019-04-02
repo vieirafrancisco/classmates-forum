@@ -5,8 +5,16 @@
         "create" : "/user"
     },
     "topicRoutes" : {
+        "getTopic" : "/topic/",
         "getTopics" : "/topics",
         "createTopic" : "/topic"
+    },
+    "postRoutes" : {
+        "getPost" : "/post/",
+        "getTopicPosts" : ""
+    },
+    "commentRoutes" : {
+        "createComment" : "/comment/"
     }
 }
 
