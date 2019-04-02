@@ -1,4 +1,19 @@
 <template>
+    <!-- <v-toolbar>
+      <v-toolbar-title><strong>Classmates Forum</strong></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn color="red" dark v-if="logged" v-on:click="logout">Logout
+          <v-icon dark right>keyboard_arrow_right</v-icon>
+        </v-btn>
+        <v-btn color="green" dark v-else @click="$router.push('login')">{{"logged"}}
+          <v-icon dark right>keyboard_arrow_right</v-icon>
+        </v-btn>
+
+      </v-toolbar-items>
+      <router-view></router-view>
+    </v-toolbar> -->
+
   <div id="app">
     <img alt="Vue logo" src="../assets/logo.png">
     <a href = "#" v-if = "logged" v-on:click = "logout"> Click for logout </a>
