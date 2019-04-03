@@ -1,5 +1,6 @@
 package com.ufal.classmates_forum.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.ufal.classmates_forum.domain.Tag;
@@ -26,6 +27,14 @@ public class TagController {
     @Autowired
     private TopicRepository topicRepository;
 
+    @GetMapping(value="/tags")
+    public ResponseEntity<List<Tag>> getAllTags(){
+        return new ResponseEntity<>(
+            repository.findAll(),
+            HttpStatus.OK
+        );
+    }
+
     @GetMapping(value="tag/{id}")
     public ResponseEntity<?> getTagById(@PathVariable Integer id){
 
@@ -39,7 +48,7 @@ public class TagController {
         }
 
         return new ResponseEntity<>(
-            String.format("User with id: %d doesn't exist", id),
+            String.format("Tag with id: %d doesn't exist", id),
             HttpStatus.NOT_FOUND
         );
 
@@ -84,7 +93,7 @@ public class TagController {
         }
 
         return new ResponseEntity<>(
-            String.format("User with id: %d doesn't exist", id),
+            String.format("Tag with id: %d doesn't exist", id),
             HttpStatus.NOT_FOUND
         );
     }

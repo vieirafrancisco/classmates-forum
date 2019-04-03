@@ -24,16 +24,9 @@ public class PostController {
 
     @GetMapping(value="/posts")
     public ResponseEntity<?> listAllPosts(){
-
-        if(repository.count() != 0){
-            return new ResponseEntity<>(
-                repository.findAll(),
-                HttpStatus.OK
-            );
-        }
-
         return new ResponseEntity<>(
-            HttpStatus.NO_CONTENT
+            repository.findAll(),
+            HttpStatus.OK
         );
     }
 

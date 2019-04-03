@@ -30,8 +30,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
         String msg;
-        System.out.println(contains(uri, method));
-        System.out.println("contains");
+        
         if(contains(uri, method)){
             String uid = request.getHeader("token");
             
