@@ -90,7 +90,6 @@ public class UserControllerTests extends DefaultControllerTest {
                 createURLWithPort("/user"), HttpMethod.DELETE,entity,String.class);
         System.out.println(response.getStatusCodeValue());
         System.out.println(response);
-        UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.getStatusCodeValue() == 200;
     }
 
