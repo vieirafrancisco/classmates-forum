@@ -13,16 +13,24 @@ public class TopicControllerTests extends DefaultControllerTest {
     //Create Topic test
     @Test
     public void testCreateTopic() throws Exception{
-        User user = new User("abcd","admin");
+
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
+        user.setId(2);
         UserLogin.getInstance().addLoggedUser(user);
-        headers.add("token","abcd");
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(
                 "{\"description\":\"jadson\"}",headers);
-        String response = restTemplate.postForObject(createURLWithPort("/topic"),entity,String.class);
+        //String response = restTemplate.postForObject(createURLWithPort("/topic"),entity,String.class);
+        //System.out.println(response);
+        //UserLogin.getInstance().removeLoggedUser("123");
+        //assert response.contains("create");
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/topic"),HttpMethod.POST,entity,String.class);
         System.out.println(response);
         UserLogin.getInstance().removeLoggedUser("abcd");
-        assert response.contains("create");
+        assert response.getStatusCodeValue() == 200;
     }
     //Get All Topics test
     @Test

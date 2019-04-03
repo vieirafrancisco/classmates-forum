@@ -33,7 +33,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //User Not Found test
     @Test
     public void testUserNotFound() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -48,7 +49,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //Get a user test
     @Test
     public void testGetUser() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -63,7 +65,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //Get all users test
     @Test
     public void testGetAllUsers() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -77,13 +80,16 @@ public class UserControllerTests extends DefaultControllerTest {
     //Delete a user test
     @Test
     public void testDeleteUser() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
+        user.setId(2);
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/user/1"), HttpMethod.DELETE,entity,String.class);
+                createURLWithPort("/user"), HttpMethod.DELETE,entity,String.class);
         System.out.println(response.getStatusCodeValue());
+        System.out.println(response);
         UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.getStatusCodeValue() == 200;
     }
