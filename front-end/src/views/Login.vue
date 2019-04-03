@@ -1,10 +1,32 @@
 <template>
-    <div>
-        <li v-for="error in errors" v-bind:key = "error.message">
-            {{ error.message }}
-        </li>
-        <button  @click="login">Login with Google</button>
-        <button  @click="singUp">SingUp with Google</button>        
+    <div class="center-parent">
+        <v-card color="blue-grey" class="center" width="400px">
+            <v-container fluid grid-list-lg>
+                <v-layout row wrap>
+                    <v-flex xs12>
+                        <v-card class="justify-center">
+                            <div class="aling-center">
+                                <div class="headline">Faça o login</div>
+                                <v-btn  @click="login">Login with Google</v-btn>
+                            </div>
+                        </v-card>
+                    </v-flex>
+                    <v-flex xs12>
+                        <v-card>
+                            <div class="aling-center">
+                                <div class="headline">Registre com o Google</div>
+                                <v-btn @click="singUp">SingUp with Google</v-btn>        
+                            </div>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+                <div v-for="error in errors" v-bind:key = "error.message">
+                    <v-alert :value="true" type="error">
+                        {{ error.message }}
+                    </v-alert>
+                </div>      
+            </v-container>
+        </v-card>
     </div>
 </template>
 
@@ -21,7 +43,7 @@ export default {
         login: function () {
             this.$store.dispatch("login")
             .then((response) => {
-                
+                this.$router.push("/topics")
             })
             .catch((error) => {
                 this.errors.push(error);
@@ -31,7 +53,7 @@ export default {
         singUp: function () {
             this.$store.dispatch("register")
             .then((response) => {
-                
+                this.$router.push("/topics")                
             })
             .catch((error) => {
                 this.errors.push(error);

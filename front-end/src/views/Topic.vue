@@ -1,11 +1,12 @@
 <template>
-    <div>
+    <div><TopicItemList/></div>
+    <!-- <v-container fluid>
         <li v-for="error in errors" v-bind:key = "error.message">
             {{ error.message }}
         </li>
         <router-link to="/topic/create">Criar topico</router-link>
         <TopicItemList/>
-    </div>
+    </v-container> -->
 </template>
 
 <script>
