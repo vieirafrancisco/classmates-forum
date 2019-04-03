@@ -2,7 +2,9 @@ package com.ufal.classmates_forum.controller;
 
 import java.util.Optional;
 
+import com.ufal.classmates_forum.UserLogin;
 import com.ufal.classmates_forum.domain.User;
+import com.ufal.classmates_forum.exceptions.UserNotLoggedException;
 import com.ufal.classmates_forum.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,13 @@ public class UserController {
 
     @DeleteMapping(value="/user")
     public ResponseEntity<?> removerUser(@RequestAttribute User user) {
+        
+        try{
+            UserLogin.getInstance().removeLoggedUser(user.getUid());
+        } catch(UserNotLoggedException e){
+            e.getStackTrace();
+        }
+        
         repository.delete(user);
 
         return new ResponseEntity<>(

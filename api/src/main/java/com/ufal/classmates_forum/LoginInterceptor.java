@@ -12,13 +12,16 @@ import com.ufal.classmates_forum.domain.User;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    private static final List<Pair> routesAdmin = new ArrayList<>();
+    private List<Pair> routesAdmin = new ArrayList<>();
+    private List<Pair> routesUser = new ArrayList<>();
 
     public LoginInterceptor(){
         routesAdmin.add(new Pair("/users", "get"));
-        routesAdmin.add(new Pair("/user", "delete"));
         routesAdmin.add(new Pair("/user/[0-9]", "get"));
         routesAdmin.add(new Pair("/topic", "post"));
+        routesAdmin.add(new Pair("/topic/[0-9]", "delete"));
+
+        routesUser.add(new Pair("/user", "delete"));
     }
 
     public boolean preHandle(
@@ -31,7 +34,21 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         String method = request.getMethod();
         String msg;
         
-        if(contains(uri, method)){
+        if(contains(uri, method, this.routesUser)){
+            String uid = request.getHeader("token");
+            if(UserLogin.getInstance().existByUid(uid)){
+                User user = UserLogin.getInstance().getUserByUid(uid);
+                request.setAttribute("user", user);
+                
+                return true;
+            } else{
+                msg = "Non user Logged!";
+                response.sendRedirect("/error/" + msg);
+                return false;
+            }
+        }
+        
+        if(contains(uri, method, this.routesAdmin)){
             String uid = request.getHeader("token");
             
             if(UserLogin.getInstance().existByUid(uid)){
@@ -55,8 +72,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    private boolean contains(String url, String method){
-        for(Pair p : routesAdmin){
+    private boolean contains(String url, String method, List<Pair> routes){
+        for(Pair p : routes){
             if(url.matches(p.getFirst()) && method.toLowerCase().equals(p.getSecond())) return true;
         }
         return false;
