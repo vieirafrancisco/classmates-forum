@@ -1,26 +1,36 @@
 <template>
-    <!-- <v-toolbar>
-      <v-toolbar-title><strong>Classmates Forum</strong></v-toolbar-title>
+  <div>
+    <v-toolbar color="blue-grey" class="white--text">
+
+      <v-toolbar-title class="title"><strong>Classmates Forum</strong></v-toolbar-title>
       <v-spacer></v-spacer>
+
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn color="red" dark v-if="logged" v-on:click="logout">Logout
+        <v-btn color="red" dark v-if="logged" v-on:click="logout"><Strong>Logout</Strong>
+          <v-icon dark right>keyboard_arrow_left</v-icon>
+        </v-btn>
+        <v-btn color="white" class="green--text" dark v-else @click="$router.push('login')"><strong>Login</strong>
           <v-icon dark right>keyboard_arrow_right</v-icon>
         </v-btn>
-        <v-btn color="green" dark v-else @click="$router.push('login')">{{"logged"}}
-          <v-icon dark right>keyboard_arrow_right</v-icon>
-        </v-btn>
-
       </v-toolbar-items>
-      <router-view></router-view>
-    </v-toolbar> -->
+    </v-toolbar>
 
-  <div id="app">
+    <v-container fluid>
+      <router-view></router-view>
+    </v-container>
+    <v-footer class="pa-3">
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
+   
+  </div>
+  <!-- <div id="app">
     <img alt="Vue logo" src="../assets/logo.png">
     <a href = "#" v-if = "logged" v-on:click = "logout"> Click for logout </a>
     <router-link v-else to="/login"> Click for login </router-link>
     <router-link to="/topics"> Click for topic </router-link>
     <router-view></router-view>
-  </div>
+  </div> -->
 </template>
 
 <script>
