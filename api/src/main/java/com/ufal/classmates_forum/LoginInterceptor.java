@@ -12,13 +12,13 @@ import com.ufal.classmates_forum.domain.User;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    private static final List<String> routesAdmin = new ArrayList<>();
+    private static final List<Pair> routesAdmin = new ArrayList<>();
 
     public LoginInterceptor(){
-        routesAdmin.add("/users");
-        routesAdmin.add("/user");
-        routesAdmin.add("/user/[0-9]");
-        routesAdmin.add("/topic");
+        routesAdmin.add(new Pair("/users", "get"));
+        routesAdmin.add(new Pair("/user", "delete"));
+        routesAdmin.add(new Pair("/user/[0-9]", "get"));
+        routesAdmin.add(new Pair("/topic", "post"));
     }
 
     public boolean preHandle(
@@ -28,9 +28,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     ) throws Exception {
         
         String uri = request.getRequestURI();
+        String method = request.getMethod();
         String msg;
-
-        if(routesAdmin.contains(uri) || matchesRegexRoute(uri)){
+        System.out.println(contains(uri, method));
+        System.out.println("contains");
+        if(contains(uri, method)){
             String uid = request.getHeader("token");
             
             if(UserLogin.getInstance().existByUid(uid)){
@@ -54,9 +56,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    private boolean matchesRegexRoute(String uri){
-        for(String route: routesAdmin){
-            if(uri.matches(route)) return true;
+    private boolean contains(String url, String method){
+        for(Pair p : routesAdmin){
+            if(url.matches(p.getFirst()) && method.toLowerCase().equals(p.getSecond())) return true;
         }
         return false;
     }
