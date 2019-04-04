@@ -1,5 +1,7 @@
-package com.ufal.classmates_forum;
+package com.ufal.classmates_forum.testsControllers;
 
+import com.ufal.classmates_forum.DefaultControllerTest;
+import com.ufal.classmates_forum.UserLogin;
 import com.ufal.classmates_forum.domain.User;
 
 import org.junit.Test;

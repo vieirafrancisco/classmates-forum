@@ -1,14 +1,14 @@
-package com.ufal.classmates_forum;
+package com.ufal.classmates_forum.testsControllers;
 
 
-import com.ufal.classmates_forum.domain.Login;
+import com.ufal.classmates_forum.DefaultControllerTest;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-public class UserLoginControllerTests extends DefaultControllerTest{
+public class UserLoginControllerTests extends DefaultControllerTest {
 
     //Login Test
     @Test
