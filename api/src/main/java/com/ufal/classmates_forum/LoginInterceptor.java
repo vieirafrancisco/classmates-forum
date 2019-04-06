@@ -1,6 +1,7 @@
 package com.ufal.classmates_forum;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,16 +13,15 @@ import com.ufal.classmates_forum.domain.User;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    private List<Pair> routesAdmin = new ArrayList<>();
-    private List<Pair> routesUser = new ArrayList<>();
+    private List<ServicePermition> routes = new ArrayList<>();
 
     public LoginInterceptor(){
-        routesAdmin.add(new Pair("/users", "get"));
-        routesAdmin.add(new Pair("/user/[0-9]", "get"));
-        routesAdmin.add(new Pair("/topic", "post"));
-        routesAdmin.add(new Pair("/topic/[0-9]", "delete"));
+        routes.add(new ServicePermition("/users", "get", Arrays.asList("admin")));
+        routes.add(new ServicePermition("/user/[0-9]", "get", Arrays.asList("admin")));
+        routes.add(new ServicePermition("/topic", "post", Arrays.asList("admin")));
+        routes.add(new ServicePermition("/topic/[0-9]", "delete", Arrays.asList("admin")));
 
-        routesUser.add(new Pair("/user", "delete"));
+        routes.add(new ServicePermition("/user", "delete", Arrays.asList("admin", "user")));
     }
 
     public boolean preHandle(
@@ -33,50 +33,40 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
         String msg;
-        
-        if(contains(uri, method, this.routesUser)){
+        ServicePermition s = match(uri, method, routes);
+
+        if(s != null){
             String uid = request.getHeader("token");
-            if(UserLogin.getInstance().existByUid(uid)){
+
+            if(UserLogin.getInstance().existByUid(uid)) {
                 User user = UserLogin.getInstance().getUserByUid(uid);
-                request.setAttribute("user", user);
-                
-                return true;
-            } else{
-                msg = "Non user Logged!";
-                response.sendRedirect("/error/" + msg);
-                return false;
-            }
-        }
-        
-        if(contains(uri, method, this.routesAdmin)){
-            String uid = request.getHeader("token");
-            
-            if(UserLogin.getInstance().existByUid(uid)){
-                User user = UserLogin.getInstance().getUserByUid(uid);
-                request.setAttribute("user", user);
-                
-                if(user.getUserType().equals("admin")){
-                    return true;
-                } else{
-                    msg = "User not Admin!";
-                    response.sendRedirect("/error/admin/" + msg);
+                if(s.getAllowedUsersTypes().contains(user.getUserType())){
+                    request.setAttribute("user", user);
+                }else{
+                    msg = "permission denied!";
+                    response.sendRedirect("/error/" + msg);
                     return false;
                 }
-            } else{
-                msg = "Non user Logged!";
+            }else{
+                if(uid == null){
+                    msg = "Token not passed to request";
+                }else{
+                    msg = "user not logged";
+                }
                 response.sendRedirect("/error/" + msg);
                 return false;
             }
+
         }
 
         return true;
     }
 
-    private boolean contains(String url, String method, List<Pair> routes){
-        for(Pair p : routes){
-            if(url.matches(p.getFirst()) && method.toLowerCase().equals(p.getSecond())) return true;
+    private ServicePermition match(String url, String method, List<ServicePermition> routes){
+        for(ServicePermition p : routes){
+            if(url.matches(p.getUri()) && method.toLowerCase().equals(p.getMethod())) return p;
         }
-        return false;
+        return null;
     }
 
 }
