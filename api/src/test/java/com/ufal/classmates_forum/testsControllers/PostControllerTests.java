@@ -1,10 +1,11 @@
-package com.ufal.classmates_forum;
+package com.ufal.classmates_forum.testsControllers;
 
 
+import com.ufal.classmates_forum.DefaultControllerTest;
 import org.junit.Test;
 import org.springframework.http.*;
 
-public class PostControllerTests extends DefaultControllerTest{
+public class PostControllerTests extends DefaultControllerTest {
 
     @Test
     public void createPostTest(){

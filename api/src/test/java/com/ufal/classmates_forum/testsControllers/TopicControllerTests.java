@@ -1,7 +1,8 @@
-package com.ufal.classmates_forum;
+package com.ufal.classmates_forum.testsControllers;
 
+import com.ufal.classmates_forum.DefaultControllerTest;
+import com.ufal.classmates_forum.UserLogin;
 import com.ufal.classmates_forum.domain.User;
-import com.ufal.classmates_forum.exceptions.UserAlreadyLoggedException;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,16 +14,24 @@ public class TopicControllerTests extends DefaultControllerTest {
     //Create Topic test
     @Test
     public void testCreateTopic() throws Exception{
-        User user = new User("abcd","admin");
+
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
+        user.setId(2);
         UserLogin.getInstance().addLoggedUser(user);
-        headers.add("token","abcd");
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(
                 "{\"description\":\"jadson\"}",headers);
-        String response = restTemplate.postForObject(createURLWithPort("/topic"),entity,String.class);
+        //String response = restTemplate.postForObject(createURLWithPort("/topic"),entity,String.class);
+        //System.out.println(response);
+        //UserLogin.getInstance().removeLoggedUser("123");
+        //assert response.contains("create");
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/topic"),HttpMethod.POST,entity,String.class);
         System.out.println(response);
         UserLogin.getInstance().removeLoggedUser("abcd");
-        assert response.contains("create");
+        assert response.getStatusCodeValue() == 200;
     }
     //Get All Topics test
     @Test
@@ -38,7 +47,7 @@ public class TopicControllerTests extends DefaultControllerTest {
     public void testGetTopic(){
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/tag/1"), HttpMethod.GET,entity,String.class);
+                createURLWithPort("/topic/1"), HttpMethod.GET,entity,String.class);
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 200;
     }
@@ -56,19 +65,26 @@ public class TopicControllerTests extends DefaultControllerTest {
     public void testTopicNotFound(){
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/tag/134"), HttpMethod.GET,entity,String.class);
+                createURLWithPort("/topic/134"), HttpMethod.GET,entity,String.class);
         System.out.println(response.getStatusCodeValue());
         assert response.getStatusCodeValue() == 404;
     }
     //Topic Id Already Existis
     @Test
-    public void testTopicIdAlreadyExists(){
+    public void testTopicIdAlreadyExists() throws Exception{
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
+        user.setId(2);
+        UserLogin.getInstance().addLoggedUser(user);
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(
                 "{\"id\":1,\"description\":\"jadson\"}",headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/tag"), HttpMethod.POST,entity,String.class);
+                createURLWithPort("/topic"), HttpMethod.POST,entity,String.class);
         System.out.println(response.getStatusCodeValue());
+        System.out.println(response);
+        UserLogin.getInstance().removeLoggedUser("abcd");
         assert response.getStatusCodeValue() == 406;
     }
 }

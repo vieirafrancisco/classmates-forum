@@ -1,5 +1,7 @@
-package com.ufal.classmates_forum;
+package com.ufal.classmates_forum.testsControllers;
 
+import com.ufal.classmates_forum.DefaultControllerTest;
+import com.ufal.classmates_forum.UserLogin;
 import com.ufal.classmates_forum.domain.User;
 
 import org.junit.Test;
@@ -33,7 +35,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //User Not Found test
     @Test
     public void testUserNotFound() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -48,7 +51,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //Get a user test
     @Test
     public void testGetUser() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -63,7 +67,8 @@ public class UserControllerTests extends DefaultControllerTest {
     //Get all users test
     @Test
     public void testGetAllUsers() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -77,14 +82,16 @@ public class UserControllerTests extends DefaultControllerTest {
     //Delete a user test
     @Test
     public void testDeleteUser() throws Exception{
-        User user = new User("abcd","admin");
+        User user = new User("abcd","Francisco");
+        user.setUserType("admin");
+        user.setId(2);
         UserLogin.getInstance().addLoggedUser(user);
         headers.add("token","abcd");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/user/1"), HttpMethod.DELETE,entity,String.class);
+                createURLWithPort("/user"), HttpMethod.DELETE,entity,String.class);
         System.out.println(response.getStatusCodeValue());
-        UserLogin.getInstance().removeLoggedUser("abcd");
+        System.out.println(response);
         assert response.getStatusCodeValue() == 200;
     }
 

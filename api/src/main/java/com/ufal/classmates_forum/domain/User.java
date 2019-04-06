@@ -21,12 +21,7 @@ public class User {
     private String uid;
 
     @JsonManagedReference("user_topic")
-    @OneToMany(
-        fetch = FetchType.EAGER,
-        cascade = {
-            CascadeType.PERSIST,
-            CascadeType.REMOVE}, 
-        mappedBy = "author")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "author")
     private List<Topic> topics;
 
     @JsonManagedReference("user_post")
@@ -87,4 +82,12 @@ public class User {
     public void setTopics(List<Topic> topics){
         this.topics = topics;
     }
+
+    @PreRemove
+    public void something(){
+        for(Post post: this.posts){
+            post.setUser(null);
+        }
+    }
+
 }

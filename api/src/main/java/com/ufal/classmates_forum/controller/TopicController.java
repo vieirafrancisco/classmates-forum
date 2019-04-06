@@ -25,16 +25,9 @@ public class TopicController {
 
     @GetMapping(value="/topics")
     public ResponseEntity<?> listAllTopics(){
-
-        if(repository.count() != 0){
-            return new ResponseEntity<>(
-                repository.findAll(),
-                HttpStatus.OK
-            );
-        }
-
         return new ResponseEntity<>(
-            HttpStatus.NO_CONTENT
+            repository.findAll(),
+            HttpStatus.OK
         );
     }
 
@@ -80,11 +73,11 @@ public class TopicController {
     public ResponseEntity<?> removeTopic(@PathVariable Integer id){
 
         if(repository.existsById(id)){
-            Optional<Topic> topic = repository.findById(id);
+            Topic topic = repository.findById(id).get();
             repository.deleteById(id);
 
             return new ResponseEntity<>(
-                topic.get().getId(),
+                topic.getId(),
                 HttpStatus.OK
             );
         }
