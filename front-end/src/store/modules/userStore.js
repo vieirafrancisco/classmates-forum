@@ -1,6 +1,3 @@
-import {sectionStatus} from "../../api/status.config.json"
-import { signInFirebase, logoutFirebase } from "../../services/firebase.service"
-import { createUser, loginUser, logoutUser } from "../../services/user.service"
 import UserStorageService from '../../services/storage.service.js'
 
 
