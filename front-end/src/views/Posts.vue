@@ -16,7 +16,6 @@ export default {
     beforeMount(){
         this.$store.dispatch("getTopicPosts", this.$route.params.topicId)
         .then(response => {
-            
         }).catch(error => {
             alert(JSON.stringify(error));
         })

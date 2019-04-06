@@ -10,7 +10,7 @@
 
             <template v-slot:item="props">
                 <v-flex xs12 sm6 md4 lg4>
-                    <PostItem v-bind:key = "props.item.id" v-bind:topic = "props.item" />
+                    <PostItem v-bind:key = "props.item.id" v-bind:post = "props.item" />
                 </v-flex>
             </template>
 
@@ -29,6 +29,10 @@ export default {
     name: "PostItemList",
     data: function(){
         return{
+            rowsPerPageItems: [4, 8, 12],
+            pagination: {
+                rowsPerPage: 8
+            },
         }
     },
 
@@ -37,15 +41,16 @@ export default {
     },
     computed: {
         posts() {
-            return this.$store.state.postStore.currentTopicPosts;
+            if(this.$store.state.postStore.currentTopicPosts != null){
+                return this.$store.state.postStore.currentTopicPosts;
+            }
+            
+            return [];
         },
 
         loading() {
             return this.$store.state.topicStore.loading;
         }
     },
-    beforeMount() {
-        this.$store.dispatch("getTopicPosts", this.$route.params.topicId);
-    }
 }
 </script>

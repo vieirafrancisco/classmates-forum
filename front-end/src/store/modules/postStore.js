@@ -26,7 +26,7 @@ const postStore = {
             const responseGetPost = await dispatch("callService", getPostData);
 
             commit("SET_POST", responseGetPost.data);
-            alert(JSON.stringify(responseGetPost))
+            
             return responseGetPost;
         },
 
