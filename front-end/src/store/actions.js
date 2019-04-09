@@ -36,6 +36,10 @@ export async function callService({state}, {name, data = {}}){
             _error = serveErrors[statusCode]
         }
 
+        _error["code"] = statusCode;
+        _error["service"] = name;
+        _error["data"] = data;
+
         throw _error
     }
     
