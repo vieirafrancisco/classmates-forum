@@ -13,10 +13,10 @@ import {userRoutes} from "../api/routes.config.json"
  * 
  * @returns {Promise}
  */
-export const createUser = (uid, displayName, photoUrl, email) => {
+export const createUser = ({uid, displayName, photoUrl, email}) => {
     return api.post(userRoutes["create"], {
-        uid:uid, 
-        name:displayName
+        uid: uid, 
+        name: displayName
     });
 }
 
@@ -37,7 +37,8 @@ export function updateUser() {
  * 
  * @returns {Promise}
  */
-export const loginUser = (uid) => {
+export const loginUser = ({uid}) => {
+    api.defaults.headers.common['token'] = uid;
     return api.post(userRoutes["login"], {uid}) 
 }
 
@@ -48,7 +49,7 @@ export const loginUser = (uid) => {
  * 
  * @returns {Promise}
  */
-export const logoutUser = (uid) => {
+export const logoutUser = ({uid}) => {
     return api.post(userRoutes["logout"], {
         uid:uid
     }) 
