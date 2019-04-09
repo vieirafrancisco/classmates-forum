@@ -1,15 +1,25 @@
 {
     "sectionStatus" : {
         "userStatus": {
-            "login": {
+            "loginUser": {
                 "406" : {"message" : "user logged"},
                 "404" : {"message" : "user not found"}
             },
-            "logout": {
+            "logoutUser": {
                 
             },
-            "register": {
-                "200" : {"message" : "Register sucess"}
+            "createUser": {
+                "200" : {"message" : "Register sucess"},
+                "406" : {"message" : "User registed"}
+            }
+        },
+
+        "topicStatus" : {
+            "getAllTopics" : {
+
+            },
+            "createTopic" : {
+                
             }
         }
     },
@@ -17,7 +27,9 @@
     "generalStatus" : {
         "serveErrors" : {
             "500" : {"message" : "internal server error"},
-            "ECONNABORTED" : {"message" : "service unavailable"}
+            "ECONNABORTED" : {"message" : "service unavailable"},
+            "503" : {"message" : "service unavailable"},
+            "403" : {"message" : "User Forbidden"}
         }
     }
 }

@@ -1,28 +1,46 @@
+import services from '../services/services'
 import {sectionStatus, generalStatus} from "./../api/status.config.json"
+import { async } from "q";
 
-export function apiAction(context, {errorSection, actionName, args}) {
-    return new Promise((resolve, reject) => {
-        context.dispatch(actionName).then((response) => {
-            resolve(response);
-        }).catch((error) => {
-            let statusCode;
-            const serverErrors = generalStatus["serveErrors"]
-            const errorsActionStatus = sectionStatus[errorSection][actionName];
-            const errors = []
+export async function callService({state}, {name, data = {}}){
+    try{
+        if(name in services){
+            const service = services[name]
+            const callback = service.func;
 
-            if(!error.response){
-                statusCode = error.code;
-            }else{
-                statusCode = error.response.status;
+            if(service.permition == "user"){
+                if(state.userStore.logged){
+                    data.uid = state.userStore.uid;
+                }else{
+                    throw {code : 403}
+                } 
             }
 
-            if(statusCode in errorsActionStatus){
-                errors.push(errorsActionStatus[statusCode]);
-            }else if(statusCode in serverErrors){
-                errors.push(serverErrors[statusCode])
-            }
-            
-            reject(errors)
-        });
-    }); 
+            return await callback(data);
+        }else{
+            throw {code : 503};
+        }
+
+    }catch(error){
+        const serveErrors = generalStatus["serveErrors"]
+        const statusCode = !error.response ? error.code : error.response.status
+        const sectionStatusName = Object.keys(sectionStatus).find(key => {
+            return name in sectionStatus[key];
+        })
+        const errorsService = !!sectionStatusName ? sectionStatus[sectionStatusName][name] : {}
+        let _error = {message : "Error not found", info : JSON.stringify(error)}
+
+        if(statusCode in errorsService){
+            _error = errorsService[statusCode];
+        }else if(statusCode in serveErrors){
+            _error = serveErrors[statusCode]
+        }
+
+        _error["code"] = statusCode;
+        _error["service"] = name;
+        _error["data"] = data;
+
+        throw _error
+    }
+    
 }
