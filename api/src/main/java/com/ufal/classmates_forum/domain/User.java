@@ -18,6 +18,11 @@ public class User {
     private String userType;
 
     @Column(unique=true)
+    private String email;
+
+    private String imageUrl;
+
+    @Column(unique=true)
     private String uid;
 
     @JsonManagedReference("user_topic")
@@ -27,6 +32,10 @@ public class User {
     @JsonManagedReference("user_post")
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Post> posts;
+
+    @JsonManagedReference("user_comment")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="user")
+    private List<Comment> comments;
 
     public User(){}
 
@@ -83,8 +92,32 @@ public class User {
         this.topics = topics;
     }
 
+    public List<Comment> getComments(){
+        return this.comments;
+    }
+
+    public void setComments(List<Comment> comments){
+        this.comments = comments;
+    }
+
+    public String getEmail(){
+        return this.email;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public String getImageUrl(){
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
+    }
+
     @PreRemove
-    public void something(){
+    public void userPreRemove(){
         for(Post post: this.posts){
             post.setUser(null);
         }

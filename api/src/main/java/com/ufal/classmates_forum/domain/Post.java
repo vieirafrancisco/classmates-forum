@@ -1,13 +1,16 @@
 package com.ufal.classmates_forum.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
 public class Post {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
@@ -22,6 +25,10 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "topic_id")
     private Topic topic;
+
+    @JsonManagedReference("post_comment")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="post")
+    private List<Comment> comments;
 
     public Post(){}
 
@@ -68,5 +75,13 @@ public class Post {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public List<Comment> getComments(){
+        return this.comments;
+    }
+
+    public void setComments(List<Comment> comments){
+        this.comments = comments;
     }
 }
