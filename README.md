@@ -91,7 +91,7 @@ O projeto em Java é basicamente uma API REST, feita em SpringBoot, que possibil
     `-- pom.xml
 ```
 
-Onde **doc/** é guardado os artefatos utilizado no projeto, em **src/** existe o **main/java/com/ufal/classmates_forum** que é onde está toda a codificação e o **test/java/com/ufal/classmates_forum** onde está localizado os testes, e o pom.xml é onde fica as dependências.
+Onde **doc/** é guardado os artefatos utilizados no projeto, em **src/** existe o **main/java/com/ufal/classmates_forum** que é onde está toda a codificação, o **test/java/com/ufal/classmates_forum** é onde estão localizados os testes, e o pom.xml é onde ficam as dependências.
 
 A estrutura dentro do **main/java/com/ufal/classmates_forum**:
 
@@ -109,8 +109,8 @@ A estrutura dentro do **main/java/com/ufal/classmates_forum**:
         `-- UserLogin.java
 ```
 
-Em que **domain/** é onde fica as entidade e **repository/** onde fica as interfaces do Jpa (para CRUD das entidades) que representam o model do sistema;  
-O **controller/** é onde está todos os controladores, que vai alimentar as requisições feitas pela aplicação;  
+Em que **domain/** é onde ficam as entidadse e **repository/** onde ficam as interfaces do Jpa (para CRUD das entidades) que representam o model do sistema;  
+O **controller/** é onde estão todos os controladores, que vaão alimentar as requisições feitas pela aplicação;  
 Em **exceptions/** estão as exceções específicas, criadas para o sistema;  
 **ClassmatesForumApplication.java** é a classe principal, criada pelo próprio SpringBoot;  
 **LoginInterceptor.java** e **ServicePermition.java** são classes que fazem/auxiliam o bloqueio de rotas para alguns tipos de requisições;    
@@ -125,7 +125,7 @@ Modelo Conceitual:
 O modelo conceitual utilizado no sistema está no arquivo */api/doc/modelo_entidade-relacionamento.dia*  
 
 SGBD:  
-O que está sendo usado é o H2, que é feito o armazenamento em memória, mas têm a opção de mudar para o MySQL em */api/src/main/resources/application.properties* mudando o valor do *spring.profiles.active* de **dev** para **deploy**. Porém, por víes de facilidade, recomendamos deixar o padrão com o H2, principalmente para teste de usabilidade.  
+O que está sendo usado é o H2, com armazenamento feito em memória, mas existe a opção de mudar para o MySQL em */api/src/main/resources/application.properties* mudando o valor do *spring.profiles.active* de **dev** para **deploy**. Porém, por víes de facilidade, recomendamos deixar o padrão com o H2, principalmente para teste de usabilidade.  
 
 Hibernate:  
 O projeto de banco de dados foi feito em Hibernate
