@@ -28,11 +28,13 @@ The folder **api** contain all code of API developed in Java with framework Spri
 - Application front-end:
   - npm 
 
-## Run with Makefile
+## Build and run with Makefile
 For execute the API or app using Makefile you just need run following commands in root of  project:
 
-- For API: ```make run-api```
-- For app: ```make run-app```
+- For build the API: ```make build-api```
+- For build the app: ```make build-app```
+- For run the API: ```make run-api```
+- For run the app: ```make run-app```
 
 This will install the required depedencies and run server with the API or application.
 
