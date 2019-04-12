@@ -112,9 +112,9 @@ A estrutura dentro do **main/java/com/ufal/classmates_forum**:
 
 Em que **domain/** é onde fica as entidade e **repository/** onde fica as interfaces do Jpa (para CRUD das entidades) que representam o model do sistema;  
 O **controller/** é onde está todos os controladores, que vai alimentar as requisições feitas pela aplicação;  
-Em **exceptions/** estão as exceções específicas, criadas para o sistema;
-**ClassmatesForumApplication.java** é a classe principal, criada pelo próprio SpringBoot;
-**LoginInterceptor.java** e **ServicePermition.java** são classes que fazem/auxiliam o bloqueio de rotas para alguns tipos de requisições;  
+Em **exceptions/** estão as exceções específicas, criadas para o sistema;  
+**ClassmatesForumApplication.java** é a classe principal, criada pelo próprio SpringBoot;  
+**LoginInterceptor.java** e **ServicePermition.java** são classes que fazem/auxiliam o bloqueio de rotas para alguns tipos de requisições;    
 **UserLogin.java** é a classe que armazena os usuários que estão logados no sistema.
 
 ### Padrão de Projeto
