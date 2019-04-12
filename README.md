@@ -76,10 +76,9 @@ If you're just using the API we recommend to install [Postman](https://www.getpo
 
 and so on...
 
-## 
-
 ## Seção para os projetos das disciplinas - UFAL
-O projeto em Java tem essa estrutura:
+
+O projeto em Java é basicamente uma API REST, feita em SpringBoot, que possibilita criar usuários, criar tópicos, criar posts dentro de tópicos, fazer comentários em posts entre outras coisas (mais informações no [documento](https://github.com/vieirafrancisco/classmates-forum/blob/develop/api/doc/documento.pdf)) e está estruturado da seguinte forma:
 ```
 .
 |-- api
