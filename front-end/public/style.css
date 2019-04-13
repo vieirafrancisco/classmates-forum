@@ -1,0 +1,44 @@
+html {
+    height: 100%;
+}
+
+.aling-center{
+    padding: 20px;
+    text-align: center;
+}
+
+.element-padding{
+    padding: 3%;
+}
+
+.element-tag{
+    height: 50px;
+    overflow-y: auto;
+
+}
+
+.center-parent{
+    position: relative;
+    height: 400px;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.title {
+    font-family: 'Marcellus SC', serif;
+    font-style: italic;
+}
+
+
+:root {
+    -color-primary: #f2f5f7;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Marcellus+SC');

@@ -13,7 +13,12 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private String title;
+
     private String description;
+
+    private boolean state;
 
     @JsonManagedReference("topic_post")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
@@ -35,7 +40,8 @@ public class Topic {
 
     public Topic(){}
 
-    public Topic(String description){
+    public Topic(String title, String description){
+        this.title = title;
         this.description = description;
     }
 
@@ -82,4 +88,21 @@ public class Topic {
     public String getAuthorName(){
         return this.author.getName();
     }
+
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public void setState(boolean state){
+        this.state = state;
+    }
+
+    public boolean isState(){
+        return this.state;
+    }
+
 }

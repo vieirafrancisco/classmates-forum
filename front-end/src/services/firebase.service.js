@@ -1,11 +1,11 @@
 import firebase from 'firebase';
 
-const LOGIN_METHOD = "pop-up"
+const LOGIN_METHOD = "redirect"
 
 export const signInFirebase= () => {
     const provider =  new firebase.auth.GoogleAuthProvider();
-    if(LOGIN_METHOD == "pop-up") {
-        return firebase.auth().signInWithPopup(provider);
+    if(LOGIN_METHOD == "redirect") {
+        return firebase.auth().signInWithRedirect(provider);
     } 
 }
 

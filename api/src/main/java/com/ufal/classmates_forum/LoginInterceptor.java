@@ -22,6 +22,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         routes.add(new ServicePermition("/topic/[0-9]", "delete", Arrays.asList("admin")));
 
         routes.add(new ServicePermition("/user", "delete", Arrays.asList("admin", "user")));
+        routes.add(new ServicePermition("/comment/[0-9]", "delete", Arrays.asList("admin", "user")));
     }
 
     public boolean preHandle(
